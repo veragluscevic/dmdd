@@ -11,6 +11,9 @@ import os,os.path,shutil
 import pickle
 import logging
 import time
+
+on_rtd = False
+
 try:
     import numpy.random as random
     import matplotlib.pyplot as plt
@@ -19,6 +22,7 @@ try:
     from scipy.interpolate import UnivariateSpline as interpolate
     from scipy.optimize import fsolve
 except ImportError:
+    on_rtd = True
     np = None
     pass
 
@@ -27,8 +31,9 @@ try:
 except ImportError:
   logging.warning('pymultinest not imported!')
 
-from constants import *
-from globals import *
+if not on_rtd:
+    from constants import *
+    from globals import *
 
 try:
     MAIN_PATH = os.environ['DMDD_MAIN_PATH']
