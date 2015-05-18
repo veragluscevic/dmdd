@@ -1,7 +1,4 @@
-try:
-    import numpy as np
-except ImportError:
-    np = None
+import numpy as np
     
 FNFP_PARAM_NAMES = ['fnfp_si', 'fnfp_sd', 'fnfp_anapole', 'fnfp_magdip', 'fnfp_elecdip',
                     'fnfp_LS', 'fnfp_f1', 'fnfp_f2', 'fnfp_f3', 'fnfp_si_massless', 'fnfp_sd_massless',
