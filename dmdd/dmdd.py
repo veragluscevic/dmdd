@@ -8,17 +8,18 @@ except ImportError:
     pass
     
 import os,os.path,shutil
-import numpy as np
 import pickle
 import numpy.random as random
 import matplotlib.pyplot as plt
 import logging
 import time
 try:
+    import numpy as np
     from scipy.stats import poisson
     from scipy.interpolate import UnivariateSpline as interpolate
     from scipy.optimize import fsolve
 except ImportError:
+    np = None
     pass
 
 try:
