@@ -20,7 +20,7 @@ so the documentation strings for the most important functions are just copied he
 rate_UV
 --------
 
-dRdQ()
+rate_UV.dRdQ()
 ^^^^^^
 
     This is the main differential nuclear-recoil rate function. Its output (in units of cts/keV/kg/s) is computed for any one of 28 different scattering operators, by setting the appropriate ``sigma_*`` parameter to a non-zero value.
@@ -71,7 +71,7 @@ dRdQ()
     In all cases, the mediator can turn "massless" by appending _massless.
 
 
-R()
+rate_UV.R()
 ^^^^^^
     Theoretical total integrated recoil-energy rate.
 
@@ -112,7 +112,7 @@ R()
 rate_genNR
 --------
 
-dRdQ()
+rate_genNR.dRdQ()
 ^^^^^^^
 
     Differential recoil energy spectrum in counts/keV/kg/sec
@@ -191,7 +191,7 @@ dRdQ()
       array of differential recoil energy spectrum in
       counts/keV/kg/sec
 
-R()
+rate_genNR.R()
 ^^^^^^^^
     Fractional observed events in counts/kg/sec
     
