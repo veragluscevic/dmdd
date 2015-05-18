@@ -5,7 +5,7 @@ from Cython.Distutils import build_ext
 import numpy
 
 def readme():
-    with open('README.md') as f:
+    with open('README.rst') as f:
         return f.read()
 
 # Hackishly inject a constant into builtins to enable importing of the
