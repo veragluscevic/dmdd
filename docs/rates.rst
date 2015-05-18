@@ -23,7 +23,7 @@ rate_UV
 rate_UV.dRdQ()
 ^^^^^^
 
-    This is the main differential nuclear-recoil rate function. Its output (in units of cts/keV/kg/s) is computed for any one of 28 different scattering operators, by setting the appropriate ``sigma_*`` parameter to a non-zero value.
+    This is the main differential nuclear-recoil rate function. Its output (in units of cts/keV/kg/s) is computed for any one of 28 different scattering scenarios (involving 9 different UV operators), by setting the appropriate ``sigma_*`` parameter to a non-zero value.
 
     
     :param Q:
@@ -153,9 +153,7 @@ rate_genNR.dRdQ()
           -the second entry is the coefficient of the q^2/mDM^2 term.
           
       c13N-c15N must have one entry.
-      All cXN have mass dimension negative two.
-      The mass scale of the suppression is 100 GeV by default (may be adjusted; see below).
-      By default c1p=np.array([1.,0.,0.]); all others are all zero.
+      All cXN have mass dimension negative two. The mass scale of the suppression is 500 GeV by default (may be adjusted; see below). By default all coefficients are set to zero.
 
     :param c_scale: 
       Suppression scale of all cXN coefficients in GeV.
