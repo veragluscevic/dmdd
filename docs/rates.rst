@@ -23,7 +23,7 @@ rate_UV
 rate_UV.dRdQ()
 ^^^^^^
 
-    This is the main differential nuclear-recoil rate function. Its output (in units of cts/keV/kg/s) is computed for any one of 28 different scattering scenarios (involving 9 different UV operators), by setting the appropriate ``sigma_*`` parameter to a non-zero value.
+    This is the main differential nuclear-recoil rate function. Its output (in units of cts/keV/kg/s) is computed for any one of 18 different scattering scenarios (involving 9 different UV operators), by setting the appropriate ``sigma_*`` parameter to a non-zero value.
 
     
     :param Q:
@@ -109,13 +109,77 @@ rate_UV.R()
     For reference on other paremeters, see :func:`dRdQ`.
 
 
+loglikelihood()
+^^^^^^^^^^^^^^^
+    Log-likelihood of array of recoil energies
+    
+    :param Er: 
+      Array of energies in keV.
+      It can have as many entries as desired.
+    :type Er: ``np.ndarray``
+      
+    :param efficiency: 
+      Fractional efficiency as a function of energy.
+      Efficiencies available:
+        dmdd.eff.efficiency_Ar
+        dmdd.eff.efficiency_Ge
+        dmdd.eff.efficiency_I
+        dmdd.eff.efficiency_KIMS
+        dmdd.eff.efficiency_Xe
+      right now, all of these are set to be constant and equal to 1.
+
+    :type efficiency: ``function``
+      
+    :param Qmin,Qmax: 
+      Minimum/maximum energy in keVNR of interest, e.g. detector threshold
+      default 2., cutoff default 30.
+    
+    :param mass: 
+      Dark matter mass in GeV.
+      Default to 50. (optional)
+    :type mass: ``float``
+
+    :param sigma_*:
+        Various scattering cross sections [in cm^2] off a proton. See :func:`dRdQ` for details.
+
+    :param fnfp_*:
+        Dimensionless ratio of neutron to proton coupling 
+
+    :param v_lag: 
+      Velocity of the solar system with respect to the Milky Way in km/s.
+      Default to 220. (optional)
+    :type v_lag: ``float``
+    
+    :param v_rms: 
+      1.5 * (velocity dispersion in km/s) of the local DM distribution.
+      Default to 220. (optional)
+    :type v_rms: ``float``
+    
+    :param v_esc: 
+      Escape velocity in km/s of a DM particle in the galactic rest frame.
+      Default to 544. (optional)
+    :type v_esc: ``float``
+    
+    :param element:
+      Name of the detector element.
+      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
+      Default to 'xenon' (optional)
+    :type element: ``str``
+    
+    :param rho_x:
+      Local DM density in GeV/cm^3.
+      Default to 0.3 (optional)
+    :type rho_x: ``float``
+    
+    For reference on other paremeters, see :func:`dRdQ`.
+
 rate_genNR
 --------
 
 rate_genNR.dRdQ()
 ^^^^^^^
 
-    Differential recoil energy spectrum in counts/keV/kg/sec
+    Differential recoil energy spectrum in counts/keV/kg/sec. Its output (in units of cts/keV/kg/s) is computed for any combination of 28 different couplings to nucleons, by setting the appropriate ``cXN_*`` parameters to a non-zero value. 
 
     :param Er:
       This is a list of energies in keV.
