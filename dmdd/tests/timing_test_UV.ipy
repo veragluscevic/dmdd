@@ -1,0 +1,136 @@
+#!/usr/bin/env ipython
+import os,os.path,shutil
+import numpy as np
+import pickle
+import matplotlib.pyplot as plt
+
+import dmdd
+import test
+import dmdd_efficiencies as eff
+
+"""
+Optimal output should be close to this:
+
+
+ ---- for SI_Higgs:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.47 µs per loop
+R:
+10000 loops, best of 3: 91.7 µs per loop
+
+ ---- for Milicharge:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.38 µs per loop
+R:
+10000 loops, best of 3: 88.7 µs per loop
+
+ ---- for SD_fu:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.18 µs per loop
+R:
+10000 loops, best of 3: 82.5 µs per loop
+
+ ---- for Anapole:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.83 µs per loop
+R:
+10000 loops, best of 3: 150 µs per loop
+
+ ---- for Mag.dip.heavy:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.96 µs per loop
+R:
+10000 loops, best of 3: 150 µs per loop
+
+ ---- for Mag.dip.light:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.96 µs per loop
+R:
+10000 loops, best of 3: 155 µs per loop
+
+ ---- for Elec.dip.heavy:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.18 µs per loop
+R:
+10000 loops, best of 3: 90.1 µs per loop
+
+ ---- for Elec.dip.light:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.34 µs per loop
+R:
+10000 loops, best of 3: 79.4 µs per loop
+
+ ---- for f1:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.62 µs per loop
+R:
+10000 loops, best of 3: 92.9 µs per loop
+
+ ---- for f2_Higgs:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.61 µs per loop
+R:
+10000 loops, best of 3: 79.2 µs per loop
+
+ ---- for f3_Higgs:
+dR/dQ for single Q:
+100000 loops, best of 3: 8.59 µs per loop
+R:
+10000 loops, best of 3: 79.2 µs per loop
+
+ ---- for LS:
+dR/dQ for single Q:
+100000 loops, best of 3: 9.61 µs per loop
+R:
+1000 loops, best of 3: 205 µs per loop
+---------
+---------
+ loglike for Higgs_SI, for 1 Q, energy_resolution=yes:
+10000 loops, best of 3: 110 µs per loop
+
+ loglike for Higgs_SI, for 1 Q, energy_resolution=no:
+10000 loops, best of 3: 96.1 µs per loop
+
+"""
+
+
+experiment = dmdd.Experiment('Xe','xenon',5., 40.,10000., eff.efficiency_unit)
+models = test.make_UVmodels(return_models=True)
+mass = 40.
+qs = np.arange(10)
+q = np.array([10.])
+v_lag = 200.
+v_rms = 100.
+v_esc = 600.
+rho_x = 0.4
+
+sigma_names = {}
+fnfp_names = {}
+fnfp_vals = {}
+for m in models:
+    sigma_names[m.name] = m.param_names[1]    
+    if len(m.fixed_params)>0:
+       fnfp_names[m.name] = m.fixed_params.keys()[0]
+       fnfp_vals[m.name] = m.fixed_params.values()[0] 
+    else:
+        fnfp_names[m.name] = None
+        fnfp_vals[m.name] = None
+
+
+for i,m in enumerate(models):
+    print '\n ---- for {}:'.format(m.name)
+    kwargs = {sigma_names[m.name]:1.}
+    if fnfp_names[m.name] is not None:
+       kwargs[fnfp_names[m.name]] = fnfp_vals[m.name]
+
+    print 'dR/dQ for single Q:'
+    %timeit(dmdd.rate_UV.dRdQ(q, mass=mass, element=experiment.element,v_lag=v_lag, v_rms=v_rms, v_esc=v_esc, rho_x=rho_x,**kwargs))
+    print 'R:'
+    %timeit(dmdd.rate_UV.R(eff.efficiency_unit, mass=mass, element=experiment.element,Qmin=experiment.Qmin, Qmax=experiment.Qmax,v_lag=v_lag, v_rms=v_rms, v_esc=v_esc, rho_x=rho_x,**kwargs))
+
+print '---------'
+print '---------'
+print ' loglike for Higgs_SI, for 1 Q, energy_resolution=yes:'
+%timeit(dmdd.rate_UV.loglikelihood(q, eff.efficiency_unit, mass=mass,sigma_si=1.,fnfp_si=1.,element=experiment.element,Qmin=experiment.Qmin, Qmax=experiment.Qmax,exposure=experiment.exposure,energy_resolution=True,v_lag=v_lag, v_rms=v_rms, v_esc=v_esc, rho_x=rho_x))
+print '\n loglike for Higgs_SI, for 1 Q, energy_resolution=no:'
+%timeit(dmdd.rate_UV.loglikelihood(q, eff.efficiency_unit, mass=mass,sigma_si=1.,fnfp_si=1.,element=experiment.element,Qmin=experiment.Qmin, Qmax=experiment.Qmax,exposure=experiment.exposure,energy_resolution=False,v_lag=v_lag, v_rms=v_rms, v_esc=v_esc, rho_x=rho_x))
