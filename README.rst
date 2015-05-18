@@ -25,6 +25,11 @@ or by cloning the repository::
     cd dmdd
     python setup.py install
 
+Usage
+------
+
+For a quick tour of usage, check out the `tutorial notebook <http://nbviewer.ipython.org/github/veragluscevic/dmdd/blob/master/dmdd_tutorial.ipynb>`_; for more complete documentation, `read the docs <http://dmdd.rtfd.org>`_.
+
 Attribution
 -----------
 
