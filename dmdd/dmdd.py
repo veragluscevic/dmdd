@@ -1,19 +1,25 @@
-import rate_NR 
-import rate_genNR  
-import rate_UV 
-import dmdd_efficiencies as eff
-import dmdd_plot as dp
-
+try:
+    import rate_NR 
+    import rate_genNR  
+    import rate_UV 
+    import dmdd_efficiencies as eff
+    import dmdd_plot as dp
+except ImportError:
+    pass
+    
 import os,os.path,shutil
 import numpy as np
 import pickle
 import numpy.random as random
 import matplotlib.pyplot as plt
-from scipy.stats import poisson
 import logging
 import time
-from scipy.interpolate import UnivariateSpline as interpolate
-from scipy.optimize import fsolve
+try:
+    from scipy.stats import poisson
+    from scipy.interpolate import UnivariateSpline as interpolate
+    from scipy.optimize import fsolve
+except ImportError:
+    pass
 
 try:
   import pymultinest
