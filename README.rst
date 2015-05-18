@@ -6,9 +6,11 @@ of recoil-event data from dark-matter direct-detection experiments
 under a wide variety of scattering theories. It includes the following
 features:
 
-  * Enables calculation of the nuclear-recoil rates for a wide range of non-relativistic and relativistic scattering operators, including non-standard momentum-, velocity-, and spin-dependent rates,
-  * Accounts for the correct nuclear response functions for each scattering operator, as given in Anand et al. (2013).
-  * Takes into account the natural abundances of isotopes for a
+* Enables calculation of the nuclear-recoil rates for a wide range of non-relativistic and relativistic scattering operators, including non-standard momentum-, velocity-, and spin-dependent rates,
+ 
+* Accounts for the correct nuclear response functions for each scattering operator, as given in Anand et al. (2013).
+  
+* Takes into account the natural abundances of isotopes for a
     variety of experimental target elements.
 
 Installation
