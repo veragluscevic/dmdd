@@ -10,8 +10,8 @@ features:
  
 * Accounts for the correct nuclear response functions for each scattering operator, as given in Anand et al. (2013).
   
-* Takes into account the natural abundances of isotopes for a
-    variety of experimental target elements.
+* Takes into account the natural abundances of isotopes for a 
+variety of experimental target elements.
 
 Installation
 ------------
