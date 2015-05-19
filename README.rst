@@ -8,7 +8,7 @@ features:
 
 * Enables calculation of the nuclear-recoil rates for a wide range of non-relativistic and relativistic scattering operators, including non-standard momentum-, velocity-, and spin-dependent rates,
  
-* Accounts for the correct nuclear response functions for each scattering operator, as given in Anand et al. (2013).
+* Accounts for the correct nuclear response functions for each scattering operator, as given in `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_.
   
 * Takes into account the natural abundances of isotopes for a variety of experimental target elements.
 
