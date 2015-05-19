@@ -13,7 +13,7 @@ features:
 The code is being actively developed on `GitHub
 <http://github.com/veragluscevic/dmdd>`_;  please feel free to
 contribute pull requests or raise issues.  If you use this code in
-your research, please cite GitHub page; ID request is submitted to ASCL and will be available soon. 
+your research, please cite GitHub page; ID request has been submitted to ASCL. 
 
 Installation
 ------------
