@@ -34,5 +34,5 @@ Attribution
 -----------
 
 If you use this code in your research, for now please cite this page; ASCL ID is pending.
-citation::
+
 
