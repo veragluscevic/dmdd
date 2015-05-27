@@ -44,30 +44,46 @@ def dRdQSI(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
     :type Er: ``ndarray``
         
     :param V0:
-        Velocity in km/s 
+        Velocity in km/s
+    :type V0: ``float``
 
     :param v_lag:
         Lag velocity in km/s.
+    :type v_lag: ``float``
 
     :param v_esc:
         Galactic escape velocity in km/s
+    :type v_esc: ``float``
 
     :param mx:
         Dark matter particle mass in GeV
+    :type mx: ``float``
 
     :param sigp:
         Dark-matter-proton scattering cross section normalized to
         give about 1 count at LUX when set to 1.
+    :type sigp: ``float``
         
     :param fnfp:
         Dimensionless ratio of neutron to proton coupling.
+    :type fnfp: ``float``
 
     :param elt:
-        element name
+      Name of the detector element.
+      Choice of:
+        'argon',
+        'fluorine',
+        'germanium',
+        'helium',
+        'iodine',
+        'sodium',
+        'xenon'.
+      *Optional*, default to 'xenon'
     :type elt: ``str``
 
-    :param rho_x: (optional)
-        Local dark matter density.
+    :param rho_x:
+        Local dark matter density in GeV/cm^3. Optional, default 0.3
+    :type rho_x: ``float``
     
     """
     cdef int npts = len(Er)
@@ -95,7 +111,7 @@ def dRdQSI(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
 @cython.boundscheck(False)
 def dRdQSI_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the spin-independent (scalar-scalar) scattering cross section in units of cts/keV/kg/s.
+    This is the rate from the spin-independent (scalar-scalar) scattering cross section *with massless mediator* in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI` 
     """
@@ -158,7 +174,7 @@ def dRdQSD(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
 @cython.boundscheck(False)
 def dRdQSD_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the spin-dependent (axial-axial) scattering cross section in units of cts/keV/kg/s.
+    This is the rate from the spin-dependent (axial-axial) scattering cross section *with massless mediator* in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -223,7 +239,7 @@ def dRdQana(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DT
 @cython.boundscheck(False)
 def dRdQana_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the anapole moment scattering cross section in units of cts/keV/kg/s.
+    This is the rate from the anapole moment *with massless mediator* scattering cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     
@@ -292,7 +308,7 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
 @cython.boundscheck(False)
 def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the magnetic dipole moment scattering cross section in units of cts/keV/kg/s.
+    This is the rate from the magnetic dipole moment *with massless mediator* scattering cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -359,7 +375,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
 @cython.boundscheck(False)
 def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the the rate from electric dipole moment scattering cross section in units of cts/keV/kg/s.
+    This is the the rate from electric dipole moment *with massless mediator* scattering cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -426,7 +442,7 @@ def dRdQLS(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
 @cython.boundscheck(False)
 def dRdQLS_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the the rate from a :L dot S generating: scattering cross section in units of cts/keV/kg/s.
+    This is the the rate from a :L dot S generating: *with massless mediator* scattering cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -489,7 +505,7 @@ def dRdQf1(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, 
 @cython.boundscheck(False)
 def dRdQf1_massless(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from a pseudoscalar-scalar (CP-odd coupling to DM, CP-even coupling to SM) cross section in units of cts/keV/kg/s.
+    This is the rate from a pseudoscalar-scalar (CP-odd coupling to DM, CP-even coupling to SM) *with massless mediator* cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -553,7 +569,7 @@ def dRdQf2(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, 
 @cython.boundscheck(False)
 def dRdQf2_massless(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from a scalar-pseudoscalar (CP-even coupling to DM, CP-odd coupling to SM) cross section in units of cts/keV/kg/s.
+    This is the rate from a scalar-pseudoscalar (CP-even coupling to DM, CP-odd coupling to SM) *with massless mediator* cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -617,7 +633,7 @@ def dRdQf3(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, 
 @cython.boundscheck(False)
 def dRdQf3_massless(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from a pseudoscalar-pseudoscalar (CP-odd coupling to DM and to SM) cross section in units of cts/keV/kg/s.
+    This is the rate from a pseudoscalar-pseudoscalar (CP-odd coupling to DM and to SM) *with massless mediator* cross section in units of cts/keV/kg/s.
 
     Takes same parameters as :func:`dRdQSI`.
     """
@@ -670,24 +686,44 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
     :type Q: ``ndarray``
 
     :param mass:
-        Dark-matter particle mass [GeV]
+        Dark-matter particle mass [GeV]. *Optional*, default 50.
+    :type mass: ``float``
 
     :param sigma_*:
-        Various scattering cross sections [cm^2] off a proton. The value passed will be multiplied with a normalization factor given in ``dmdd.PAR_NORMS``. See explanation of suffixes below; the default ``PAR_NORMS`` are also listed.
+        Various scattering cross sections [cm^2] off a **proton**. The symbol * should be replaced with a suffix from the list below. The value passed will be multiplied with a normalization factor given in ``dmdd.PAR_NORMS``. See explanation of suffixes and values of ``PAR_NORMS`` below. *Optional*, default all 0.
+    :type sigma_*: ``float``
 
     :param fnfp_*:
-        Dimensionless ratio of neutron to proton coupling 
+        Dimensionless ratio of neutron to proton coupling. *Optional*, default all 1.
+    :type fnfp_*: ``float``
 
-    :param v_lag,v_rms,v_esc:
-        Lag, RMS, and escape velocities [km/s]. Note that ``v_rms`` is
-        3/2x the standard RMS of a Maxwellian velocity distribution;
-        that is, the default ``v_rms`` value = 220 km/s.
+    :param v_lag:
+        Lag velocity [km/s]. *Optional*, default 220.
+    :type v_lag: ``float``
+
+    :param v_rms:
+        RMS velocity [km/s]. Note that ``v_rms`` is 3/2x the standard RMS of a Maxwellian velocity distribution; that is, the default ``v_rms`` value = 220.
+    :type v_rms: ``float``
+
+    :param v_esc:
+        Escape velocity [km/s]. *Optional*, default 544.
+    :type v_esc: ``float``
 
     :param rho_x:
-        Dark matter energy density.
+        Local dark matter mass density [GeV/cm^3]. *Optional*, default 0.3
+    :type rho_x: ``float``
 
     :param element:
-        Target nucleus element name (all lower case).
+      Name of the detector element.
+      Choice of:
+        'argon',
+        'fluorine',
+        'germanium',
+        'helium',
+        'iodine',
+        'sodium',
+        'xenon'.
+      *Optional*, default to 'xenon'
     :type element: ``str``
 
     Parameter suffixes:
@@ -707,8 +743,12 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
     _f3        pseudoscalar-pseudoscalar     1e-41 1e-42
     =========  ============================= ===== =====
 
-    In all cases, the mediator can turn "massless" by appending _massless.
+    In all suffixes, the mediator is specified to be "massless" by appending _massless.
 
+      
+
+    :return: 
+      array of differential recoil energy spectrum in counts/keV/kg/sec
 
     """
     
@@ -776,35 +816,30 @@ def R(object efficiency_fn, DTYPE_t mass=50.,
     Integrates :func:`dRdQ` between ``Qmin`` and ``Qmax`` using
     trapezoidal integration over 100 points.
     
-    :param efficiency_function:
-        Recoil-detection efficiency as a function of nuclear recoil energy.
-    :type efficiency_function: ``function``
+    :param efficiency_fn:
+      Fractional efficiency as a function of energy.
+      Efficiencies available:
+        dmdd.eff.efficiency_Ar,
+        dmdd.eff.efficiency_Ge,
+        dmdd.eff.efficiency_I,
+        dmdd.eff.efficiency_KIMS,
+        dmdd.eff.efficiency_Xe,
+      right now, all of these are set to be constant and equal to 1.
+    :type efficiency: ``object``
 
-    :param mass:
-        Dark-matter particle mass [GeV]
+    :param Qmin:
+        Nuclear-recoil energy threshold of experiment [keVNR]. *Optional*, default 2.
+    :type Qmin: ``float``
 
-    :param sigma_*:
-        Various scattering cross sections [in cm^2] off a proton. See :func:`dRdQ` for details.
-
-    :param fnfp_*:
-        Dimensionless ratio of neutron to proton coupling 
-
-    :param v_lag,v_rms,v_esc:
-        Lag, RMS, and escape velocities [km/s]. Note that ``v_rms`` is
-        3/2x the standard RMS of a Maxwellian velocity distribution;
-        that is, the default ``v_rms`` value = 220 km/s.
-
-    :param rho_x:
-        Dark matter energy density.
-
-    :param element:
-        Target nucleus element name (all lower case).
-    :type element: ``str``
-
-    :param Qmin,Qmax:
-        Nuclear-recoil energy window of experiment.
+    :param Qmax:
+        Upper bound of nuclear-recoil energy window of experiment [keVNR]. *Optional*, default 30.
+    :type Qmax: ``float``
     
-    For reference on other paremeters, see :func:`dRdQ`.
+    For reference on other parameters, see :func:`dRdQ`.
+      
+
+    :return:
+      total recoil energy rate in counts/kg/sec
     """
     cdef unsigned int npoints = 100 
     cdef unsigned int i
@@ -850,6 +885,12 @@ def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
                   str element='xenon', DTYPE_t Qmin=2., DTYPE_t Qmax=30., DTYPE_t exposure=1., energy_resolution=True):
     """
     This is the main log(likelihood) for any combination of UV models.
+    
+    For reference on free parameters, see :func:`dRdQ` and :func:`R`.
+      
+
+    :return:
+      log(likelihood) for an arbitrary rate to produce an observed array of recoil events
     """
     cdef unsigned int i
     cdef long Nevents = len(Q)

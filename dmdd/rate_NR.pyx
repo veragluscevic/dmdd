@@ -37,20 +37,45 @@ eltshort = const.ELEMENT_INFO
 @cython.boundscheck(False)
 def dRdQM(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t std_coeff, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the M response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the M nuclear response alone in units of cts/keV/kg/s. This is functionally equivalent to the standard spin-independent rate.
+
+    :param Er:
+        An array of keV energies
+    :type Er: ``ndarray``
+        
+    :param V0:
+        Velocity in km/s
+    :type V0: ``float``
+
+    :param v_lag:
+        Lag velocity in km/s.
+    :type v_lag: ``float``
+
+    :param v_esc:
+        Galactic escape velocity in km/s
+    :type v_esc: ``float``
+
+    :param mx:
+        Dark matter particle mass in GeV
+    :type mx: ``float``
+
+    :param sigp:
+        Dark-matter-proton scattering cross section normalized to
+        give about 1 count at LUX when set to 1.
+    :type sigp: ``float``
+        
+    :param fnfp:
+        Dimensionless ratio of neutron to proton coupling.
+    :type fnfp: ``float``
+
+    :param elt:
+        element name
+    :type elt: ``str``
+
+    :param rho_x: (optional)
+        Local dark matter density.
+    :type rho_x: ``float``
+    
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -81,20 +106,9 @@ def dRdQM(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, D
 @cython.boundscheck(False)
 def dRdQSigPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t std_coeff, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the Sigma'' response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the Sigma'' response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -125,20 +139,9 @@ def dRdQSigPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_es
 @cython.boundscheck(False)
 def dRdQSigP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t std_coeff, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the Sigma' response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the Sigma' response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -169,20 +172,9 @@ def dRdQSigP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc
 @cython.boundscheck(False)
 def dRdQPhiPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the Phi'' response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the Phi'' response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -213,20 +205,9 @@ def dRdQPhiPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_es
 @cython.boundscheck(False)
 def dRdQDelta(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the Delta response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the Delta response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -257,20 +238,9 @@ def dRdQDelta(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_es
 @cython.boundscheck(False)
 def dRdQMPhiPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the MPhi'' (interference) response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the M-Phi'' (interference) response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -301,20 +271,9 @@ def dRdQMPhiPP(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_e
 @cython.boundscheck(False)
 def dRdQSigPDelta(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t v2_coeff, DTYPE_t q2_coeff, DTYPE_t v2q2_coeff, DTYPE_t q4_coeff, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
     """
-    This is the rate from the Sigma'Delta (interference) response in units of cts/keV/kg/s. It takes inputs of:
-    Er, as an array of keV energies
-    v_0 in km/s
-    v_LSR in km/s
-    v_esc in km/s
-    dark matter mass in GeV
-    dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1
-    coefficient of terms in the cross section that get multiplied by v^2
-    coefficient of terms in the cross section that get multiplied by q^2
-    coefficient of terms in the cross section that get multiplied by v^2*q^2
-    coefficient of terms in the cross section that get multiplied by q^4
-    dimensionless ratio of neutron to proton coupling
-    element name
-    local DM density in GeV/cm^3
+    This is the rate from the Sigma'-Delta (interference) response in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQM`
     """
     cdef int npts = len(Er)
     cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
@@ -355,6 +314,8 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
          DTYPE_t v_lag=220., DTYPE_t v_rms=220., DTYPE_t v_esc=544., DTYPE_t rho_x=0.3,
          str element='xenon'):
     """
+    differential rate for a particular EFT response. Invoking multiple responses is hazardous since some responses interfere. Use rate_genNR for more complicated EFT scenarios.
+    
     :param Er:
       This is a list of energies in keV.
       The list must be entered as a numpy array, np.array([..]).
@@ -363,63 +324,70 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
     
     :param mass:
       Dark matter mass in GeV.
-      Default to 50. (optional)
+      Optional, default to 50.
     :type mass: ``float``
     
-    :param sigma_RESPONSE:
+    :param sigma_*:
       dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1.
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type sigma_*: ``float``
     
-    :param fnfp_RESPONSE:
+    :param fnfp_*:
       dimensionless ratio of neutron to proton coupling
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type fnfp_*: ``float``
     
-    :param v2co_RESPONSE:
+    :param v2co_*:
       coefficient of terms in the cross section that get multiplied by v^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type v2co_*: ``float``
     
-    :param q2co_RESPONSE:
+    :param q2co_*:
       coefficient of terms in the cross section that get multiplied by q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type q2co_*: ``float``
     
-    :param v2q2co_RESPONSE:
+    :param v2q2co_*:
       coefficient of terms in the cross section that get multiplied by v^2*q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type v2q2co_*: ``float``
     
-    :param q4co_RESPONSE:
+    :param q4co_*:
       coefficient of terms in the cross section that get multiplied by q^4/m_N^4
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+      * should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
+    :type q4co_*: ``float``
 
     :param v_lag:
-      Velocity of the solar system with respect to the Milky Way�in km/s.
-      Default to 220. (optional)
+      Velocity of the solar system with respect to the Milky Way in km/s.
+      Optional, default to 220.
     :type v_lag: ``float``
     
     :param v_rms:
       1.5 * (velocity dispersion in km/s) of the local DM distribution.
-      Default to 220. (optional)
+      Optional, default to 220.
     :type v_rms: ``float``
     
     :param v_esc:
       Escape velocity in km/s of a DM particle in the galactic rest frame.
-      Default to 544. (optional)
+      Optional, default to 544.
     :type v_esc: ``float``
     
     :param element:
       Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon' (optional)
+      Choice of:
+        'argon',
+        'fluorine',
+        'germanium',
+        'helium',
+        'iodine',
+        'sodium',
+        'xenon'.
+      *Optional*, default to 'xenon'
     :type element: ``str``
     
     :param rho_x:
       Local DM density in GeV/cm^3.
-      Default to 0.3 (optional)
+      Optional, default to 0.3
     :type rho_x: ``float``
     """
     
@@ -455,88 +423,35 @@ def R(object efficiency_fn, DTYPE_t mass=50.,
          DTYPE_t v_lag=220., DTYPE_t v_rms=220., DTYPE_t v_esc=544., DTYPE_t rho_x=0.3,
          str element='xenon', DTYPE_t Qmin=2., DTYPE_t Qmax=30.):
     """
+    Theoretical total integrated recoil-energy rate.
 
-    :param efficiency:
+    Integrates :func:`dRdQ` between ``Qmin`` and ``Qmax`` using
+    trapezoidal integration over 100 points.
+
+    :param efficiency_fn:
       Fractional efficiency as a function of energy.
       Efficiencies available:
-        dmdd.eff.efficiency_Ar
-        dmdd.eff.efficiency_Ge
-        dmdd.eff.efficiency_I
-        dmdd.eff.efficiency_KIMS
-        dmdd.eff.efficiency_Xe
+        dmdd.eff.efficiency_Ar,
+        dmdd.eff.efficiency_Ge,
+        dmdd.eff.efficiency_I,
+        dmdd.eff.efficiency_KIMS,
+        dmdd.eff.efficiency_Xe,
       right now, all of these are set to be constant and equal to 1.
     :type efficiency: ``object``
-    
+
     :param Qmin:
-      Minimum energy in keVNR of interest, e.g. detector threshold
-      default 2.
+        Nuclear-recoil energy threshold of experiment [keVNR]. *Optional*, default 2.
     :type Qmin: ``float``
-    
+
     :param Qmax:
-      Maximum energy in keVNR of interest, e.g. detector cutoff
-      default 30.
+        Upper bound of nuclear-recoil energy window of experiment [keVNR]. *Optional*, default 30.
     :type Qmax: ``float``
     
-    :param mass:
-      Dark matter mass in GeV.
-      Default to 50. (optional)
-    :type mass: ``float``
-    
-    :param sigma_RESPONSE:
-      dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1.
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param fnfp_RESPONSE:
-      dimensionless ratio of neutron to proton coupling
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param v2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by v^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param q2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param v2q2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by v^2*q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param q4co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by q^4/m_N^4
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
+    For reference on other parameters, see :func:`dRdQ`.
+      
 
-    :param v_lag:
-      Velocity of the solar system with respect to the Milky Way�in km/s.
-      Default to 220. (optional)
-    :type v_lag: ``float``
-    
-    :param v_rms:
-      1.5 * (velocity dispersion in km/s) of the local DM distribution.
-      Default to 220. (optional)
-    :type v_rms: ``float``
-    
-    :param v_esc:
-      Escape velocity in km/s of a DM particle in the galactic rest frame.
-      Default to 544. (optional)
-    :type v_esc: ``float``
-    
-    :param element:
-      Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon' (optional)
-    :type element: ``str``
-    
-    :param rho_x:
-      Local DM density in GeV/cm^3.
-      Default to 0.3 (optional)
-    :type rho_x: ``float``
+    :return:
+      total recoil energy rate in counts/kg/sec
     """
     cdef unsigned int npoints = 100 
     cdef unsigned int i
@@ -577,93 +492,13 @@ def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
                   DTYPE_t v_lag=220., DTYPE_t v_rms=220., DTYPE_t v_esc=544., DTYPE_t rho_x=0.3,
                   str element='xenon', DTYPE_t Qmin=2., DTYPE_t Qmax=30., DTYPE_t exposure=1., energy_resolution=True):
     """
-    :param Er:
-      This is a list of energies in keV.
-      The list must be entered as a numpy array, np.array([..]).
-      It can have as many entries as desired.
-    :type Er: ``np.array``
+    This is the main log(likelihood) for any combination of EFT responses.
+    
+    For reference on free parameters, see :func:`dRdQ` and :func:`R`.
+      
 
-    :param efficiency:
-      Fractional efficiency as a function of energy.
-      Efficiencies available:
-        dmdd.eff.efficiency_Ar
-        dmdd.eff.efficiency_Ge
-        dmdd.eff.efficiency_I
-        dmdd.eff.efficiency_KIMS
-        dmdd.eff.efficiency_Xe
-      right now, all of these are set to be constant and equal to 1.
-    :type efficiency: ``object``
-    
-    :param Qmin:
-      Minimum energy in keVNR of interest, e.g. detector threshold
-      default 2.
-    :type Qmin: ``float``
-    
-    :param Qmax:
-      Maximum energy in keVNR of interest, e.g. detector cutoff
-      default 30.
-    :type Qmax: ``float``
-    
-    :param mass:
-      Dark matter mass in GeV.
-      Default to 50. (optional)
-    :type mass: ``float``
-    
-    :param sigma_RESPONSE:
-      dark-matter-proton scattering cross section normalized to give about 1 count at LUX when set to 1.
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param fnfp_RESPONSE:
-      dimensionless ratio of neutron to proton coupling
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param v2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by v^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param q2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param v2q2co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by v^2*q^2/m_N^2
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-    
-    :param q4co_RESPONSE:
-      coefficient of terms in the cross section that get multiplied by q^4/m_N^4
-      RESPONSE should be replaced by M, SigP, SigPP, PhiPP, Delta, MPhiPP, SigPDelta. (optional)
-    :type sigma_RESPONSE: ``float``
-
-    :param v_lag:
-      Velocity of the solar system with respect to the Milky Way�in km/s.
-      Default to 220. (optional)
-    :type v_lag: ``float``
-    
-    :param v_rms:
-      1.5 * (velocity dispersion in km/s) of the local DM distribution.
-      Default to 220. (optional)
-    :type v_rms: ``float``
-    
-    :param v_esc:
-      Escape velocity in km/s of a DM particle in the galactic rest frame.
-      Default to 544. (optional)
-    :type v_esc: ``float``
-    
-    :param element:
-      Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon' (optional)
-    :type element: ``str``
-    
-    :param rho_x:
-      Local DM density in GeV/cm^3.
-      Default to 0.3 (optional)
-    :type rho_x: ``float``
+    :return:
+      log(likelihood) for an arbitrary rate to produce an observed array of recoil events
     """
     cdef unsigned int i
     cdef long Nevents = len(Q)

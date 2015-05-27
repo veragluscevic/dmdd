@@ -47,12 +47,11 @@ def dRdQ(np.ndarray[DTYPE_t] Er, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.ar
       
     :param mass:
        Dark matter mass in GeV.
-       Default to 50. (optional)
+       *Optional*, default to 50.
     :type mass: ``float``
     
-    :param 28 cXN's:
-      28 different np.arrays, all optional
-      These are the EFT coefficients.
+    :param cXN's:
+      28 different np.arrays, all optional. These are the EFT coefficients.
       
       X can be any number from 1-15 (except 2).
       N must be n or p.
@@ -60,56 +59,66 @@ def dRdQ(np.ndarray[DTYPE_t] Er, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.ar
       
       The list must be entered as a numpy array, np.array([..]).
       
-      c1N and c4N must have three entries, any of which may be zero:
+      **c1N and c4N must have three entries,** any of which may be zero:
 
-        -the first entry is the momentum-independent term.
+        -the first entry is a momentum-independent term.
 
-        -the second entry is the coefficient of the q^2/mDM^2 term.
+        -the second entry is the coefficient of a term that multiplies q^2/mDM^2.
 
-        -the third entry is the coefficient of the q^4/mDM^4 term.
+        -the third entry is the coefficient of a term that multiplies q^4/mDM^4.
         
-      c3N and c5Y-c12N must have two entries, any of which may be zero:
+      **c3N and c5Y-c12N must have two entries,** any of which may be zero:
       
-          -the first entry is the momentum-independent term.
+          -the first entry is a momentum-independent term.
 
-          -the second entry is the coefficient of the q^2/mDM^2 term.
+          -the second entry is the coefficient of a term that multiplies q^2/mDM^2.
           
-      c13N-c15N must have one entry.
+      **c13N-c15N must have one entry.**
+      
       All cXN have mass dimension negative two.
-      The mass scale of the suppression is 100 GeV by default (may be adjusted; see below).
-      By default c1p=np.array([1.,0.,0.]); all others are all zero.
+      The mass scale of the suppression is 500 GeV by default (may be adjusted; see `c_scale`).
 
-    :param c_scale: 
+    :param c_scale:
       Suppression scale of all cXN coefficients in GeV.
-      From a UV perspective, this could be mediator_mass/sqrt(couplings).
-      Default 500. (optional)
+      From a UV perspective, this is roughly mediator_mass/sqrt(couplings).
+      *Optional*, default 500.
     :type c_scale: ``float``
 
-    :param v_lag: 
+    :param v_lag:
       Velocity of the solar system with respect to the Milky Way in km/s.
-      Default to 220. (optional)
+      *Optional*, default to 220.
     :type v_lag: ``float``
     
     :param v_rms: 
        1.5 * (velocity dispersion in km/s) of the local DM distribution.
-       Default to 220.
+       *Optional*, default to 220.
+    :type v_rms: ``float``
     
     :param v_esc: 
        Escape velocity in km/s of a DM particle in the galactic rest frame.
-       Default to 544.
+       *Optional*, default to 544.
+    :type v_esc: ``float``
     
-    :param element: 
+    :param element:
       Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon'
+      Choice of:
+        'argon',
+        'fluorine',
+        'germanium',
+        'helium',
+        'iodine',
+        'sodium',
+        'xenon'.
+      *Optional*, default to 'xenon'
     :type element: ``str``
       
-    :param rho_x: 
+    :param rho_x:
       Local DM density in GeV/cm^3.
-      Default to 0.3
+      *Optional*, default to 0.3
+    :type rho_x: ``float``
       
 
-    :return: dRdQ 
+    :return:
       array of differential recoil energy spectrum in counts/keV/kg/sec
   
     """
@@ -165,65 +174,35 @@ def dRdQ(np.ndarray[DTYPE_t] Er, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.ar
 @cython.boundscheck(False)
 def R(object efficiency_fn, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.array([1.,0.,0.]), np.ndarray[DTYPE_t] c3p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c4p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c5p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c6p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c7p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c8p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c9p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c10p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c11p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c12p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c13p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c14p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c15p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c1n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c3n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c4n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c5n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c6n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c7n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c8n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c9n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c10n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c11n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c12n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c13n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c14n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c15n=np.array([0.,0.,0.]), DTYPE_t v_lag=220., DTYPE_t v_rms=220., DTYPE_t v_esc=544., DTYPE_t rho_x=0.3, DTYPE_t c_scale=c_scale_global, str element='xenon', DTYPE_t Qmin=2., DTYPE_t Qmax=30.):
     """
-    Fractional observed events in counts/kg/sec
-    
-    Multiply this by an exposure in kg*sec to get a total number of observed events
+    Theoretical total integrated recoil-energy rate.
 
-    :param efficiency: 
+    Integrates :func:`dRdQ` between ``Qmin`` and ``Qmax`` using
+    trapezoidal integration over 100 points.
+    
+    :param efficiency_fn:
       Fractional efficiency as a function of energy.
       Efficiencies available:
-        dmdd.eff.efficiency_Ar
-        dmdd.eff.efficiency_Ge
-        dmdd.eff.efficiency_I
-        dmdd.eff.efficiency_KIMS
-        dmdd.eff.efficiency_Xe
+        dmdd.eff.efficiency_Ar,
+        dmdd.eff.efficiency_Ge,
+        dmdd.eff.efficiency_I,
+        dmdd.eff.efficiency_KIMS,
+        dmdd.eff.efficiency_Xe,
       right now, all of these are set to be constant and equal to 1.
     :type efficiency: ``object``
-    
-    :param Qmin,Qmax: 
-      Minimum/maximum energy in keVNR of interest, e.g. detector threshold
-      default 2. and detector cutoff default 30.
-        
-    :param mass: 
-      Dark matter mass in GeV.
-      Default to 50. (optional)
-    :type mass: ``float``
-    
-    :param 28 different cXN's:
-        28 different np.arrays, all optional
-        See :func:`dRdQ` for details.
-    
-    :param c_scale: 
-      Suppression scale of all cXN coefficients in GeV.
-      From a UV perspective, this could be mediator_mass/sqrt(couplings).
-      Default 500. (optional)
-    :type c_scale: ``float``
 
-    :param v_lag: 
-      Velocity of the solar system with respect to the Milky Way in km/s.
-      Default to 220. (optional)
-    :type v_lag: ``float``
+    :param Qmin:
+        Nuclear-recoil energy threshold of experiment [keVNR]. *Optional*, default 2.
+    :type Qmin: ``float``
+
+    :param Qmax:
+        Upper bound of nuclear-recoil energy window of experiment [keVNR]. *Optional*, default 30.
+    :type Qmax: ``float``
     
-    :param v_rms:
-      1.5 * (velocity dispersion in km/s) of the local DM distribution.
-      Default to 220. (optional)
-    :type v_rms: ``float``
-    
-    :param v_esc:
-      Escape velocity in km/s of a DM particle in the galactic rest frame.
-      Default to 544. (optional)
-    :type v_esc: ``float``
-    
-    :param element:
-      Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon' (optional)
-    :type element: ``str``
-    
-    :param rho_x:
-      Local DM density in GeV/cm^3.
-      Default to 0.3 (optional)
-    :type rho_x: ``float``
+    For reference on other parameters, see :func:`dRdQ`.
+      
+
+    :return:
+      total recoil energy rate in counts/kg/sec
     """
     cdef unsigned int npoints = 100 
     cdef unsigned int i
@@ -246,71 +225,13 @@ def R(object efficiency_fn, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.array([
 @cython.boundscheck(False)
 def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50., np.ndarray[DTYPE_t] c1p=np.array([1.,0.,0.]), np.ndarray[DTYPE_t] c3p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c4p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c5p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c6p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c7p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c8p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c9p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c10p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c11p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c12p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c13p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c14p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c15p=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c1n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c3n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c4n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c5n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c6n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c7n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c8n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c9n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c10n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c11n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c12n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c13n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c14n=np.array([0.,0.,0.]), np.ndarray[DTYPE_t] c15n=np.array([0.,0.,0.]), DTYPE_t v_lag=220., DTYPE_t v_rms=220., DTYPE_t v_esc=544., DTYPE_t rho_x=0.3, DTYPE_t c_scale=c_scale_global, str element='xenon', DTYPE_t Qmin=2., DTYPE_t Qmax=30., DTYPE_t exposure=1., energy_resolution=True):
     """
-    Log-likelihood of array of recoil energies
+    This is the main log(likelihood) for any combination of EFT coefficients.
     
-    :param Er: 
-      Array of energies in keV.
-      It can have as many entries as desired.
-    :type Er: ``np.ndarray``
+    For reference on free parameters, see :func:`dRdQ` and :func:`R`.
       
-    :param efficiency: 
-      Fractional efficiency as a function of energy.
-      Efficiencies available:
-        dmdd.eff.efficiency_Ar
-        dmdd.eff.efficiency_Ge
-        dmdd.eff.efficiency_I
-        dmdd.eff.efficiency_KIMS
-        dmdd.eff.efficiency_Xe
-      right now, all of these are set to be constant and equal to 1.
 
-    :type efficiency: ``function``
-      
-    :param Qmin,Qmax: 
-      Minimum/maximum energy in keVNR of interest, e.g. detector threshold
-      default 2., cutoff default 30.
-    
-    :param mass: 
-      Dark matter mass in GeV.
-      Default to 50. (optional)
-    :type mass: ``float``
-    
-    :param 28 cXN's:
-      28 different np.arrays, all optional
-      These are the EFT coefficients.
-      See :func:`dRdQ` for details.
-
-    
-    :param c_scale: 
-      Suppression scale of all cXN coefficients in GeV.
-      From a UV perspective, this could be mediator_mass/sqrt(couplings).
-      Default 500. (optional)
-    :type c_scale: ``float``
-
-    :param v_lag: 
-      Velocity of the solar system with respect to the Milky Way in km/s.
-      Default to 220. (optional)
-    :type v_lag: ``float``
-    
-    :param v_rms: 
-      1.5 * (velocity dispersion in km/s) of the local DM distribution.
-      Default to 220. (optional)
-    :type v_rms: ``float``
-    
-    :param v_esc: 
-      Escape velocity in km/s of a DM particle in the galactic rest frame.
-      Default to 544. (optional)
-    :type v_esc: ``float``
-    
-    :param element:
-      Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
-      Default to 'xenon' (optional)
-    :type element: ``str``
-    
-    :param rho_x:
-      Local DM density in GeV/cm^3.
-      Default to 0.3 (optional)
-    :type rho_x: ``float``
+    :return:
+      log(likelihood) for an arbitrary rate to produce an observed array of recoil events
     """
     cdef unsigned int i
     cdef long Nevents = len(Q)
