@@ -20,7 +20,7 @@ rc('text', usetex=True)
 
 import dmdd_efficiencies as eff
 import constants as const
-import rate_UV  # this is a cython-compiled library
+import rate_UV 
 
 mpl.rcParams['xtick.major.size']=8
 mpl.rcParams['ytick.major.size']=8
@@ -70,14 +70,10 @@ def plot_2d_posterior(x, y,xlabel='', ylabel='',
 
     pl.figure()
     ax = pl.gca()
-    #xlabel = ax.get_xlabel()
-    #ylabel = ax.get_ylabel()
     pl.title(title, fontsize=fontsize)
     fig = pl.gcf()
     xlabel = ax.set_xlabel(xlabel,fontsize=fontsize)
     ylabel = ax.set_ylabel(ylabel,fontsize=fontsize)
-    #pl.xlabel(xlabel,fontsize=fontsize)
-    #pl.ylabel(ylabel,fontsize=fontsize)
     if plot_samples:
         pl.plot(x,y,'o',ms=1, mfc=samplescolor, mec=samplescolor)
     pl.plot(input_x,input_y,'x',mew=3,ms=15,color=input_color,label='input',zorder=4)
@@ -107,13 +103,11 @@ def plot_2d_posterior(x, y,xlabel='', ylabel='',
         return par_x, par_y, grid_posterior, contours
     else:
         pl.savefig(savefile, bbox_extra_artists=[xlabel, ylabel], bbox_inches='tight')
-        #pl.savefig(savefile)
     
 
 
 ##################################
 def ln_evidence(filename='/data/verag/dmdd_2014/chains_uv/sim1_Xe_mass_10.00_sigma_si_7862.18_fitfor_mass_sigma_si_logflat_nlive2000/1-stats.dat'):
-    #print filename
     try:
         fev = open(filename,'r')
     except IOError,e:
@@ -125,8 +119,6 @@ def ln_evidence(filename='/data/verag/dmdd_2014/chains_uv/sim1_Xe_mass_10.00_sig
     
     line = line.split()
     line2 = line2.split()
-    #print line[5]
-    #print filename
     ln_evidence = float(line[5])
     fev.close()
     return ln_evidence
@@ -147,8 +139,6 @@ def plot_theoryfitdata(Qbins, Qhist, xerr, yerr, Qbins_theory, Qhist_theory, Qhi
     title += ')'
     plt.title(title, fontsize=titlefont)
     
-    #plt.xlabel('Nuclear recoil energy [keV]', fontsize=labelfont)
-    #plt.ylabel('Number of events', fontsize=labelfont)
     xlabel = 'Nuclear recoil energy [keV]'
     ylabel = 'Number of events'
     ax = plt.gca()

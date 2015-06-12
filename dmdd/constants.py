@@ -16,9 +16,6 @@ NUCLEAR_MASSES = {
     'fluorine': 17.6969003039,
     } # this is target nucleus mass in GeV: mT[GeV] = 0.9314941 * A[AMU]
 
-#dictionary of all relevant information about target elements, in this format:
-# {'element_name':{A_isotope_1:fractional_abundance_1, A_isotope_2:fractional_abundance_2, ...,
-#    'weight':average_atomic_weight},...}
 ELEMENT_INFO = {"xenon":{128:0.0192,129:0.2644,130:0.0408,131:0.2118,132:0.2689,134:0.1044,136:0.0887,'weight':131.1626},"germanium":{70:0.2084,72:0.2754,73:0.0773,74:0.3628,76:0.0761,'weight':72.6905},"iodine":{127:1.,'weight':127.},"sodium":{23:1.,'weight':23.},"silicon":{28:0.922,29:0.047,30:0.031,'weight':28.109},"fluorine":{19:1.,'weight':19.},"argon":{40:1.,'weight':40.},"helium":{4:1.,'weight':4.}} 
     
 

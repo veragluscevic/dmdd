@@ -6,9 +6,6 @@ from cpython cimport bool
 DTYPE = np.float
 ctypedef np.float_t DTYPE_t
 
-#cdef extern from "math.h":
-#    float INFINITY
-
 cdef extern from "math.h":
     double sin(double)
     double cos(double)

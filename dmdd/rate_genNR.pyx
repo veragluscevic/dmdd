@@ -245,7 +245,7 @@ def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
     Nexp = Rate * Tobs
     if Nevents==0 and Nexp==0.:
         return 0.
-    tot += Nevents * log(Nexp) - Nexp #helpers.log_fact(Nevents) <---this factor is in logL, but leaving it out because it does not matter in either param estimation nor in model selection.
+    tot += Nevents * log(Nexp) - Nexp
     if energy_resolution:
         tot -= Nevents * log(Rate) 
         out = dRdQ(Q, mass=mass, v_lag=v_lag, v_rms=v_rms, v_esc= v_esc, rho_x=rho_x, c_scale=c_scale, element=element, c1p=c1p, c3p=c3p, c4p=c4p, c5p=c5p, c6p=c6p, c7p=c7p, c8p=c8p, c9p=c9p, c10p=c10p, c11p=c11p, c12p=c12p, c13p=c13p, c14p=c14p, c15p=c15p, c1n=c1n, c3n=c3n, c4n=c4n, c5n=c5n, c6n=c6n, c7n=c7n, c8n=c8n, c9n=c9n, c10n=c10n, c11n=c11n, c12n=c12n, c13n=c13n, c14n=c14n, c15n=c15n) * efficiency_fn(Q)

@@ -5,7 +5,6 @@ FNFP_PARAM_NAMES = ['fnfp_si', 'fnfp_sd', 'fnfp_anapole', 'fnfp_magdip', 'fnfp_e
                     'fnfp_anapole_massless', 'fnfp_magdip_massless', 'fnfp_elecdip_massless', 'fnfp_LS_massless',
                     'fnfp_f1_massless', 'fnfp_f2_massless', 'fnfp_f3_massless']
 
-#SMD: these are defined such that they give of order 0.01 events on LUX 2013:
 PAR_NORMS = { 
     'sigma_si':1.e-47,
     'sigma_sd':1.e-42,

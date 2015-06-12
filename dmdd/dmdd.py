@@ -494,7 +494,7 @@ class MultinestRun(object):
             for i,par in enumerate(self.fit_model.param_names):
                 for j in np.arange(i+1,nparams):
                     xlabel = PARAM_TEX[self.fit_model.param_names[i]]
-                    ylabel = PARAM_TEX[self.fit_model.param_names[j]] #self.fit_model.param_names[j]
+                    ylabel = PARAM_TEX[self.fit_model.param_names[j]] 
                     savefile = self.chainspath + '2d_posterior_{}_vs_{}.pdf'.format(self.fit_model.param_names[i], self.fit_model.param_names[j])
               
                     if (self.fit_model.param_names[i] in self.sim_model.param_names):
@@ -611,9 +611,7 @@ class Simulation(object):
         self.asimov = asimov
         self.nbins_asimov = nbins_asimov
     
-        ####self.file_basename = '{}_{}_{}'.format(name,experiment.name,model.name)        
-        ####for val in param_values:
-        ####    self.file_basename += '_{:.2f}'.format(val)
+       
         self.file_basename = '{}_{}'.format(name,experiment.name)
 
         
@@ -654,8 +652,6 @@ class Simulation(object):
             if kw in PAR_NORMS:
                 norm_dict[kw] = PAR_NORMS[kw]
         self.allpars['norms'] = norm_dict
-        #for kw,val in PAR_NORMS.iteritems():
-        #    self.allpars[kw] = val
                           
       
         self.datafile = '{}/{}.dat'.format(self.path,self.file_basename)
@@ -668,7 +664,6 @@ class Simulation(object):
             allpars_old = pickle.load(fin)
             fin.close()
             if not compare_dictionaries(self.allpars,allpars_old):
-                #print(self.allpars, allpars_old)
                 print('Existing simulation does not match current parameters.  Forcing simulation.\n\n')
                 force_sim = True
                 
@@ -733,9 +728,6 @@ class Simulation(object):
 
         if not self.silent:
             print "simulated: %i events (expected %.0f)." % (Nevents,Nexpected)
-            #print '[[sim params: '
-            #print self.dRdQ_params
-            #print ']]'
         return Q
 	    
     def plot_data(self, plot_nbins=20, plot_theory=True, save_plot=True,
@@ -765,11 +757,6 @@ class Simulation(object):
             
         """
 
-        #deal with asimov here:  
-        #if self.asimov:
-        #  nbins = int(Qmax[experiment]-Qmin[experiment]) #placeholder, might have to do with self.nbins_asimov
-
-        #for data:
         Qhist,bins = np.histogram(self.Q,plot_nbins)
         Qbins = (bins[1:]+bins[:-1])/2. 
         binsize = Qbins[1]-Qbins[0] #valid only for uniform gridding.
@@ -783,8 +770,6 @@ class Simulation(object):
         if make_plot:
             plt.figure()
             plt.title('%s (total events = %i)' % (self.experiment.name,self.N), fontsize=18)
-            #plt.xlabel('Nuclear recoil energy [keV]', fontsize=18)
-            #plt.ylabel('Number of events', fontsize=18)
             xlabel = 'Nuclear recoil energy [keV]'
             ylabel = 'Number of events'
             ax = plt.gca()
@@ -804,7 +789,7 @@ class Simulation(object):
             plt.legend(prop={'size':20},numpoints=1)
             if save_plot:
                 plt.savefig(self.plotfile, bbox_extra_artists=[xlabel, ylabel], bbox_inches='tight')
-                #plt.savefig(self.plotfile)
+
 
         if return_plot_items:
             return Qbins, Qhist, xerr, yerr, Qbins_theory, Qhist_theory, binsize
@@ -867,7 +852,6 @@ class Model(object):
         self.name = name
         self.param_names = param_names
         self.dRdQ = dRdQ_fn
-        #self.loglikelihood_fn = loglike_fn
         self.loglikelihood = loglike_fn
         self.default_rate_parameters = default_rate_parameters
         if fixed_params is None:
@@ -890,7 +874,6 @@ class UV_Model(Model):
     
     """
     def __init__(self,name,param_names,**kwargs):
-        #these are copied directly from rate_UV.pyx dRdQ function
         default_rate_parameters = dict(mass=50., sigma_si=0., sigma_sd=0., sigma_anapole=0., sigma_magdip=0., sigma_elecdip=0.,
                                     sigma_LS=0., sigma_f1=0., sigma_f2=0., sigma_f3=0.,
                                     sigma_si_massless=0., sigma_sd_massless=0.,
