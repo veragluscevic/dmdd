@@ -56,7 +56,7 @@ or by cloning the repository::
 Usage
 ------
 
-For a quick tour of usage, check out the `tutorial notebook <http://nbviewer.ipython.org/github/veragluscevic/dmdd/blob/master/dmdd_tutorial.ipynb>`_; for more complete documentation, `read the docs <http://dmdd.rtfd.org>`_; and for the most important formulas and definitions regarding the ``rate_NR`` and ``rate_genNR`` modules, see also `here <http://github.com/veragluscevic/dmdd/blob/master/rate_NR-and-genNR.pdf>`_.
+For a quick tour of usage, check out the `tutorial notebook <https://github.com/veragluscevic/dmdd/blob/master/dmdd_tutorial.ipynb>`_; for more complete documentation, `read the docs <http://dmdd.rtfd.org>`_; and for the most important formulas and definitions regarding the ``rate_NR`` and ``rate_genNR`` modules, see also `here <http://github.com/veragluscevic/dmdd/blob/master/rate_NR-and-genNR.pdf>`_.
 
 Attribution
 -----------
