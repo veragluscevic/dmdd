@@ -3,7 +3,7 @@ dmdd
 
 A python package that enables simple simulation and Bayesian posterior analysis
 of nuclear-recoil data from dark matter direct detection experiments 
-for a wide variety of theories of dark matter-nucleon interactions. 
+for a wide variety of theories of dark matter-nucleon interactions.    
 
 ``dmdd`` has the following features:
 
