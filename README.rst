@@ -3,21 +3,21 @@ dmdd
 
 A python package that enables simple simulation and Bayesian posterior analysis
 of nuclear-recoil data from dark matter direct detection experiments 
-for a wide variety of scattering theories. 
+for a wide variety of theories of dark matter-nucleon interactions. 
 
 ``dmdd`` has the following features:
 
-* Calculation of the nuclear-recoil rates for a variety of scattering scenarios, including non-standard momentum-, velocity-, and spin-dependent recoil rates. 
+* Calculation of the nuclear-recoil rates for various non-standard momentum-, velocity-, and spin-dependent scattering models. 
  
-* Calculation of the nuclear response functions triggered by the operators at hand.
+* Calculation of the appropriate nuclear response functions triggered by the chosen scattering model.
   
 * Inclusion of natural abundances of isotopes for a variety of target elements: Xe, Ge, Ar, F, I, Na, He.
 
-* Simple simulation of data (where data is a list of nuclear recoil energies, including Poisson noise) under different scattering models. 
+* Simple simulation of data (where data is a list of nuclear recoil energies, including Poisson noise) under different models. 
 
-* Bayesian analysis (parameter estimation and model selection) of recoil data using ``MultiNest``.
+* Bayesian analysis (parameter estimation and model selection) of data using ``MultiNest``.
 
-All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic and Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and `Gluscevic et al. (2015) <>`_.
+All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and `Gluscevic et al. (2015) <>`_.
  
 
 Dependencies
@@ -33,11 +33,11 @@ For simulations, you will need:
 
 To do posterior analysis, you will also need:
 
-* MultiNest
+* ``MultiNest``
 
-* PyMultinest
+* ``PyMultiNest``
 
-To install these, follow the instructions `here <http://astrobetter.com/wiki/MultiNest+Installation+Notes>`_.
+To install these two, follow the instructions `here <http://astrobetter.com/wiki/MultiNest+Installation+Notes>`_.
 
 
 Installation
@@ -61,6 +61,6 @@ For a quick tour of usage, check out the `tutorial notebook <http://nbviewer.ipy
 Attribution
 -----------
 
-This package was originally developed for to derive the results of Gluscevic et al (2015). If you use this code in your research, please cite `this ASCL reference <>`_, and the following publications: `Gluscevic et al (2015) <>`_, `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_, `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_. 
+This package was originally developed for to derive the results of Gluscevic et al (2015). If you use this code in your research, please cite this ASCL reference [pending], and the following publications: Gluscevic et al (2015), `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_, `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_. 
 
 
