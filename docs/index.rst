@@ -84,8 +84,7 @@ Here is a quick example of basic usage:
     run.fit()
     run.visualize()
 
-For more details on usage and interactive documentation, see the `tutorial
-notebook <>`_. 
+
 
 Attribution
 -----------
