@@ -3,7 +3,9 @@ dmdd
 
 A python package that enables simple simulation and Bayesian posterior analysis
 of nuclear-recoil data from dark matter direct detection experiments 
-for a wide variety of theories of dark matter-nucleon interactions. 
+for a wide variety of theories of dark matter-nucleon interactions. The code is being actively developed on `GitHub
+<http://github.com/veragluscevic/dmdd>`_;  please feel free to
+contribute pull requests or raise issues. 
 
 ``dmdd`` has the following features:
 
@@ -19,10 +21,6 @@ for a wide variety of theories of dark matter-nucleon interactions.
 
 All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``), and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and Gluscevic et al. (2015).
 
-The code is being actively developed on `GitHub
-<http://github.com/veragluscevic/dmdd>`_;  please feel free to
-contribute pull requests or raise issues.  If you use this code in
-your research, please cite GitHub page; ID request has been submitted to ASCL. 
 
 Dependencies
 ------------
