@@ -13,7 +13,7 @@ contribute pull requests or raise issues.
  
 * Calculation of the appropriate nuclear response functions triggered by the chosen scattering model.
   
-* Inclusion of natural abundances of isotopes for a variety of target elements: Xe, Ge, Ar, F, I, Na, He.
+* Inclusion of natural abundances of isotopes for a variety of target elements: Xe, Ge, Ar, F, I, Na.
 
 * Simple simulation of data (where data is a list of nuclear recoil energies, including Poisson noise) under different models. 
 
