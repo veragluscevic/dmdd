@@ -17,7 +17,7 @@ for a wide variety of theories of dark matter-nucleon interactions.
 
 * Bayesian analysis (parameter estimation and model selection) of data using ``MultiNest``.
 
-All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and `Gluscevic et al. (2015) <>`_.
+All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and Gluscevic et al. (2015).
  
 
 Dependencies
