@@ -1,43 +1,49 @@
 dmdd
 =========
 
-dmdd is a python package that enables simple simulation and Bayesian posterior analysis
+A python package that enables simple simulation and Bayesian posterior analysis
 of nuclear-recoil data from dark matter direct detection experiments 
 for a wide variety of scattering theories. 
 
-dmdd has the following features:
+``dmdd`` has the following features:
 
-* Calculation of the nuclear-recoil rates for a variety of scattering scenarios, including non-standard momentum-, velocity-, and spin-dependent recoil rates. All rate and response functions from rate modules directly use incorporate from `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ (for non-relativistic operators, in rate_genNR and rate_NR) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in rate_UV). 
+* Calculation of the nuclear-recoil rates for a variety of scattering scenarios, including non-standard momentum-, velocity-, and spin-dependent recoil rates. 
  
-* Calculation of the nuclear response functions as presented in `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_.
+* Calculation of the nuclear response functions triggered by the operators at hand.
   
 * Inclusion of natural abundances of isotopes for a variety of target elements: Xe, Ge, Ar, F, I, Na, He.
 
-* Simple simulation of data (where data is a list of nuclear recoil energies) under different scattering models, including Poisson noise, following 
+* Simple simulation of data (where data is a list of nuclear recoil energies, including Poisson noise) under different scattering models. 
 
-* Bayesian analysis (parameter estimation and model selection) of recoil data using MultiNest.
+* Bayesian analysis (parameter estimation and model selection) of recoil data using ``MultiNest``.
+
+All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``) and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic and Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and `Gluscevic et al. (2015) <>`_.
  
 
 Dependencies
 ------------
 
-For simulations:
+All of the package dependencies (listed below) are contained within the `Anaconda python distribution <http://continuum.io/downloads>`_, except for ``MultiNest`` and ``PyMultinest``. 
 
-* numpy, …
+For simulations, you will need:
 
-For posterior analysis:
+* basic python scientific packages (``numpy``, ``scipy``, ``matplotlib``)
+
+* ``cython``
+
+To do posterior analysis, you will also need:
 
 * MultiNest
 
 * PyMultinest
 
-
+To install these, follow the instructions `here <http://astrobetter.com/wiki/MultiNest+Installation+Notes>`_.
 
 
 Installation
 ------------
 
-Install either using pip::
+Install ``dmdd`` either using pip::
 
     pip install dmdd
 
@@ -50,11 +56,11 @@ or by cloning the repository::
 Usage
 ------
 
-For a quick tour of usage, check out the `tutorial notebook <http://nbviewer.ipython.org/github/veragluscevic/dmdd/blob/master/dmdd_tutorial.ipynb>`_; for more complete documentation, `read the docs <http://dmdd.rtfd.org>`_; and for the most important formulas and definitions regarding the ``rate_NR`` and ``rate_genNR`` modules, see `here <http://github.com/veragluscevic/dmdd/blob/master/rate_NR-and-genNR.pdf>`_.
+For a quick tour of usage, check out the `tutorial notebook <http://nbviewer.ipython.org/github/veragluscevic/dmdd/blob/master/dmdd_tutorial.ipynb>`_; for more complete documentation, `read the docs <http://dmdd.rtfd.org>`_; and for the most important formulas and definitions regarding the ``rate_NR`` and ``rate_genNR`` modules, see also `here <http://github.com/veragluscevic/dmdd/blob/master/rate_NR-and-genNR.pdf>`_.
 
 Attribution
 -----------
 
-This package was originally developed for to derive results of Gluscevic et al (2015). If you use this code in your research, please cite the following publications: Gluscevic et al (2015), Gresham and Zurek (2014), and `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_; also please include the following ASCL ID [pending].
+This package was originally developed for to derive the results of Gluscevic et al (2015). If you use this code in your research, please cite `this ASCL reference <>`_, and the following publications: `Gluscevic et al (2015) <>`_, `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al., 2013 <https://inspirehep.net/record/1094068?ln=en>`_, `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_. 
 
 
