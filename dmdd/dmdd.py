@@ -38,19 +38,19 @@ if not on_rtd:
 try:
     MAIN_PATH = os.environ['DMDD_MAIN_PATH']
 except KeyError:
-    logging.warning('DMDD_MAIN_PATH environment variable not defined, defaulting to current working directory.')
-    MAIN_PATH = os.getcwd()
+    logging.warning('DMDD_MAIN_PATH environment variable not defined, defaulting to:   ~/.dmdd')
+    MAIN_PATH = os.path.expanduser('~/.dmdd') #os.getcwd()
 
 SIM_PATH = MAIN_PATH + '/simulations_uv/'
 CHAINS_PATH = MAIN_PATH + '/chains_uv/'
 RESULTS_PATH = MAIN_PATH + '/results_uv'
 
 if not os.path.exists(SIM_PATH):
-    os.mkdir(SIM_PATH)
+    os.makedirs(SIM_PATH)
 if not os.path.exists(CHAINS_PATH):
-    os.mkdir(CHAINS_PATH)
+    os.makedirs(CHAINS_PATH)
 if not os.path.exists(RESULTS_PATH):
-    os.mkdir(RESULTS_PATH)
+    os.makedirs(RESULTS_PATH)
 
 
 
