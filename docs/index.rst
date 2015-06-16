@@ -19,7 +19,7 @@ contribute pull requests or raise issues.
 
 * Bayesian analysis (parameter estimation and model selection) of data using ``MultiNest``.
 
-All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``), and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and Gluscevic et al. (2015).
+All rate and response functions directly implement the calculations of `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_ and `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_ (for non-relativistic operators, in ``rate_genNR`` and ``rate_NR``), and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ (for UV-motivated scattering models in ``rate_UV``). Simulations follow the prescription from `Gluscevic & Peter (2014) <http://adsabs.harvard.edu/abs/2014JCAP...09..040G>`_ and `Gluscevic et al. (2015) <http://arxiv.org/abs/1506.04454>`_.
 
 
 Dependencies
@@ -87,7 +87,7 @@ Here is a quick example of basic usage:
 Attribution
 -----------
 
-This package was originally developed for Gluscevic et al (2015). If you use this code in your research, please cite this ASCL reference [pending], and the following publications: Gluscevic et al (2015), `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_, `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_, and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_. 
+This package was originally developed for Gluscevic et al (2015). If you use this code in your research, please cite this ASCL reference [pending], and the following publications: `Gluscevic et al (2015) <http://arxiv.org/abs/1506.04454>`_, `Anand et al. (2013) <http://arxiv.org/abs/1308.6288>`_, `Fitzpatrick et al. (2013) <https://inspirehep.net/record/1094068?ln=en>`_, and `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_. 
 
 API Documentation
 -----------------
