@@ -52,6 +52,8 @@ or by cloning the repository::
     git clone https://github.com/veragluscevic/dmdd.git
     cd dmdd
     python setup.py install
+    
+Note that, if you do not set the ``DMDD_MAIN_PATH`` environment variable (location where the simulations and posterior samples will be stored), then importing ``dmdd`` will create ``~/.dmdd`` and use that location instead.
 
 Usage
 ------
