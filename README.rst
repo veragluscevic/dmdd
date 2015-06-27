@@ -53,7 +53,7 @@ or by cloning the repository::
     cd dmdd
     python setup.py install
     
-Note that, if you do not set the ``DMDD_MAIN_PATH`` environment variable (location where the simulations and posterior samples will be stored), then importing ``dmdd`` will create ``~/.dmdd`` and use that location instead.
+Note that if you do not set the ``DMDD_MAIN_PATH`` environment variable, then importing ``dmdd`` will create ``~/.dmdd`` and use that location to store simulations and posterior samples.
 
 Usage
 ------
