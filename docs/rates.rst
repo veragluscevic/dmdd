@@ -3,7 +3,7 @@
 Nuclear Recoil Rates
 =========
 
-``dmdd`` has three modules that let you calculate the differential rate :math:`dR/dE_R`, the total rate :math:`R(E_R)`, and the log(likelihood) :math:`\ln \mathcal{L}`  of nuclear-recoil events within three theoretical frameworks: 
+``dmdd`` has three modules that let you calculate the differential rate :math:`dR/dE_R`, the total rate :math:`R(E_R)`, and the log(likelihood) :math:`\ln \mathcal{L}`  of nuclear-recoil events within two theoretical frameworks: 
 
 I) ``rate_UV``: rates for a variety of UV-complete theories (from `Gresham & Zurek (2014) <http://arxiv.org/abs/1401.3739>`_ and Gluscevic et al. (2015)). This takes form factors from formUV.pyx
 
@@ -33,7 +33,7 @@ rate_UV.dRdQ()
         Dark-matter particle mass [GeV]
 
     :param sigma_*:
-        Various scattering cross sections [cm^2] off a proton. The value passed will be multiplied with a normalization factor given in ``dmdd.PAR_NORMS``. See explanation of suffixes below; the default ``PAR_NORMS`` are also listed.
+        Various scattering cross sections [cm^2] off a proton (except for sd_neutron, which calculates the spin-dependent scattering off a neutron only). The value passed will be multiplied with a normalization factor given in ``dmdd.PAR_NORMS``. See explanation of suffixes below; the default ``PAR_NORMS`` are also listed.
 
     :param fnfp_*:
         Dimensionless ratio of neutron to proton coupling 
@@ -45,27 +45,30 @@ rate_UV.dRdQ()
 
     :param rho_x:
         Dark matter energy density.
-
+    
     :param element:
-        Target nucleus element name (all lower case).
+      Name of the detector element.
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
+      Default to 'xenon' (optional)
     :type element: ``str``
 
     Parameter suffixes:
     -------
     
-    =========  ============================= ===== =====
-    Suffix     Meaning                       norm  norm (massless)
-    =========  ============================= ===== =====
-    _si        spin-independent              1e-47 1e-48
-    _sd        spin-dependent                1e-42 1e-43
-    _anapole   anapole                       1e-40 1e-45
-    _magdip    magnetic dipole               1e-38 1e-39
-    _elecdip   electric dipole               1e-44 1e-45
-    _LS        :math:`L \cdot S` generating  1e-44 1e-42
-    _f1        pseudoscalar-scalar (DM-SM)   1e-47 1e-48
-    _f2        scalar-pseudoscalar (DM-SM)   1e-42 1e-43
-    _f3        pseudoscalar-pseudoscalar     1e-41 1e-42
-    =========  ============================= ===== =====
+    =========   ============================= ===== =====
+    Suffix      Meaning                       norm  norm (massless)
+    =========   ============================= ===== =====
+    _si         spin-independent              1e-47 1e-48
+    _sd         spin-dependent                1e-42 1e-43
+    _sd_neutron spin-dependent                1e-42 1e-43
+    _anapole    anapole                       1e-40 1e-45
+    _magdip     magnetic dipole               1e-38 1e-39
+    _elecdip    electric dipole               1e-44 1e-45
+    _LS         :math:`L \cdot S` generating  1e-44 1e-42
+    _f1         pseudoscalar-scalar (DM-SM)   1e-47 1e-48
+    _f2         scalar-pseudoscalar (DM-SM)   1e-42 1e-43
+    _f3         pseudoscalar-pseudoscalar     1e-41 1e-42
+    =========   ============================= ===== =====
 
     In all cases, the mediator can turn "massless" by appending _massless.
 
@@ -85,7 +88,7 @@ rate_UV.R()
         Dark-matter particle mass [GeV]
 
     :param sigma_*:
-        Various scattering cross sections [in cm^2] off a proton. See :func:`dRdQ` for details.
+        Various scattering cross sections [in cm^2] off a proton (except in the case of sd_neutron). See :func:`dRdQ` for details.
 
     :param fnfp_*:
         Dimensionless ratio of neutron to proton coupling 
@@ -97,9 +100,11 @@ rate_UV.R()
 
     :param rho_x:
         Dark matter energy density.
-
+    
     :param element:
-        Target nucleus element name (all lower case).
+      Name of the detector element.
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
+      Default to 'xenon' (optional)
     :type element: ``str``
 
     :param Qmin,Qmax:
@@ -139,7 +144,7 @@ rate_UV.loglikelihood()
     :type mass: ``float``
 
     :param sigma_*:
-        Various scattering cross sections [in cm^2] off a proton. See :func:`dRdQ` for details.
+        Various scattering cross sections [in cm^2] off a proton (except in the case of sd_neutron). See :func:`dRdQ` for details.
 
     :param fnfp_*:
         Dimensionless ratio of neutron to proton coupling 
@@ -161,7 +166,7 @@ rate_UV.loglikelihood()
     
     :param element:
       Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
       Default to 'xenon' (optional)
     :type element: ``str``
     
@@ -238,8 +243,8 @@ rate_genNR.dRdQ()
        Default to 544.
     
     :param element: 
-      Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
+      Name of the detector element automatically weighted by isotopic abundance (except where noted, for helium).
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
       Default to 'xenon'
     :type element: ``str``
       
@@ -305,7 +310,7 @@ rate_genNR.R()
     
     :param element:
       Name of the detector element.
-      Choice of: 'argon', 'fluorine', 'germanium', 'helium', 'iodine', 'sodium', or 'xenon'
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
       Default to 'xenon' (optional)
     :type element: ``str``
     
@@ -385,10 +390,12 @@ rate_NR.dRdQM()
     :param fnfp:
         Dimensionless ratio of neutron to proton coupling.
     :type fnfp: ``float``
-
-    :param elt:
-        element name
-    :type elt: ``str``
+    
+    :param element:
+      Name of the detector element.
+      Choice of: 'argon', 'fluorine', 'germanium', 'iodine', 'sodium', 'xenon', 'nitrogen', 'neon', 'helium' (which is exclusively for helium-4, which has the dominant natural abundance), or 'he3' (for helium-3, which has trace natural abundance but may be isolated)
+      Default to 'xenon' (optional)
+    :type element: ``str``
 
     :param rho_x: (optional)
         Local dark matter density.
