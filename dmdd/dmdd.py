@@ -3,7 +3,6 @@ try:
     import rate_genNR  
     import rate_UV 
     import dmdd_efficiencies as eff
-    import dmdd_plot as dp
 except ImportError:
     pass
     
@@ -16,7 +15,6 @@ on_rtd = False
 
 try:
     import numpy.random as random
-    import matplotlib.pyplot as plt
     import numpy as np
     from scipy.stats import poisson
     from scipy.interpolate import UnivariateSpline as interpolate
@@ -455,6 +453,7 @@ class MultinestRun(object):
         """
 
         #make theory, data, and fit plots for each experiment:
+        import dmdd_plot as dp
         fitmodel_dRdQ_params = self.fit_model.default_rate_parameters
         param_values = self.global_bestfit()
         if len(self.fit_model.fixed_params) > 0:
@@ -768,6 +767,7 @@ class Simulation(object):
         Qbins_theory = self.model_Qgrid
 
         if make_plot:
+            import matplotlib.pyplot as plt
             plt.figure()
             plt.title('%s (total events = %i)' % (self.experiment.name,self.N), fontsize=18)
             xlabel = 'Nuclear recoil energy [keV]'
@@ -1072,6 +1072,7 @@ class Experiment(object):
                                             v_esc=v_esc, v_lag=v_lag, v_rms=v_rms, rho_x=rho_x)
 
         if make_plot:
+            import matplotlib.pyplot as plt
             plt.figure()
             plt.loglog(masses, sigmas * PAR_NORMS[sigma_name], lw=3, color='k')
             plt.xlabel(PARAM_TEX['mass'])
