@@ -1,7 +1,6 @@
 import os,os.path,shutil
 import numpy as np
 import pickle
-import matplotlib.pyplot as plt
 
 import dmdd
 import dmdd_efficiencies as eff
