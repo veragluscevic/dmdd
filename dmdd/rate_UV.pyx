@@ -288,7 +288,7 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
+    qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_magdip'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
@@ -300,7 +300,7 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
         ff_v_sq = formUV.factor_magdip_v_sq(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
         val_zeta = zeta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * q_squared/(scale**2) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
+        tot = v_independent * q_squared/(qref**2.) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
         out[i]=tot
     return out
 
@@ -322,7 +322,6 @@ def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
     qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_magdip_massless'] / (2 * mx * m_reduced_sq)
@@ -335,7 +334,7 @@ def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE
         ff_v_sq = formUV.factor_magdip_v_sq(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
         val_zeta = zeta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * qref**4./(scale**2.*q_squared) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
+        tot = v_independent * qref**2./q_squared * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
         out[i]=tot
     return out
 
@@ -357,7 +356,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
+    qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_elecdip'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
@@ -367,7 +366,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
         q_squared = 2.*weight*mN*q
         ff = formUV.factor_elecdip(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * q_squared/(scale**2) * val_eta * ff
+        tot = v_independent * q_squared/(qref**2.) * val_eta * ff
         out[i]=tot
     return out
 
@@ -389,7 +388,6 @@ def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYP
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
     qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_elecdip_massless'] / (2 * mx * m_reduced_sq)
@@ -400,7 +398,7 @@ def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYP
         q_squared = 2.*weight*mN*q
         ff = formUV.factor_elecdip(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * qref**4./(scale**2.*q_squared) * val_eta * ff
+        tot = v_independent * qref**2./q_squared * val_eta * ff
         out[i]=tot
     return out
 
