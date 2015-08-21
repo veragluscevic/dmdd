@@ -380,7 +380,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, , v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, qref, v_independent
     cdef DTYPE_t ff
 
     weight = eltshort[elt]['weight']
