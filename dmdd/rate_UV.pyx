@@ -312,7 +312,7 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff_v_sq, ff_v_std
 
     weight = eltshort[elt]['weight']
@@ -346,7 +346,7 @@ def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff_v_sq, ff_v_std
 
     weight = eltshort[elt]['weight']
@@ -380,7 +380,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, scale, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, , v_independent
     cdef DTYPE_t ff
 
     weight = eltshort[elt]['weight']
@@ -412,7 +412,7 @@ def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYP
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff
 
     weight = eltshort[elt]['weight']
