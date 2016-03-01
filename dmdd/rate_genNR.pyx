@@ -22,7 +22,7 @@ cdef extern from "math.h":
 
 #constants for this module:
 cdef DTYPE_t c_scale_global=500. # units for the c_i as given below
-cdef DTYPE_t ratenorm = 0.0654869 # this converts from cm**-3 * GeV**-4 to DRU = cts / keV / kg / sec
+cdef DTYPE_t ratenorm = 6548.240721048388 # this converts from cm**-3 * GeV**-4 to DRU = cts / keV / kg / sec
 
 #physical constants from constants.py:
 cdef DTYPE_t mN = const.NUCLEON_MASS # Nucleon mass in GeV

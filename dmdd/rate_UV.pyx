@@ -20,7 +20,7 @@ cdef extern from "math.h":
     double log(double)
 
 #constants for this module:
-cdef DTYPE_t ratenorm = 1.68288e31 # conversion from cm**-1 * GeV**-2 to DRU = cts / keV / kg / sec
+cdef DTYPE_t ratenorm = 1.6817124283286463e31 # conversion from cm**-1 * GeV**-2 to DRU = cts / keV / kg / sec
 
 #physical constants from constants.py:
 cdef DTYPE_t mN = const.NUCLEON_MASS # Nucleon mass in GeV
