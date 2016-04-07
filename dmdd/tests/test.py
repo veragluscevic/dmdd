@@ -173,6 +173,9 @@ def test_UVrate():
     logtest1_correct=-19.7010967514
     logtest2_correct=-13.4747945274
 
+    print('correct={}  got={}\n'.format(logtest1_correct,logtest1))
+    print('correct={}  got={}\n'.format(logtest2_correct,logtest2))
+
     assert np.isclose(logtest1_correct, logtest1)
     assert np.isclose(logtest2_correct, logtest2) 
 
