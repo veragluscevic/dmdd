@@ -20,7 +20,7 @@ cdef extern from "math.h":
     double log(double)
 
 #constants for this module:
-cdef DTYPE_t ratenorm = 1.68288e31 # conversion from cm**-1 * GeV**-2 to DRU = cts / keV / kg / sec
+cdef DTYPE_t ratenorm = 1.6817124283286463e31 # conversion from cm**-1 * GeV**-2 to DRU = cts / keV / kg / sec
 
 #physical constants from constants.py:
 cdef DTYPE_t mN = const.NUCLEON_MASS # Nucleon mass in GeV
@@ -159,7 +159,7 @@ def dRdQSD(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
-    v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_sd'] / (2 * mx * 3 * m_reduced_sq)
+    v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_sd'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
         q = Er[i]*10**-6. #converting Er from keV-->GeV.
         y_harm = weight*mN*q*b_harm**2/2. #this takes q in [GeV].
@@ -219,7 +219,7 @@ def dRdQSD_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
     qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
-    v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_sd_massless'] / (2 * mx * 3 * m_reduced_sq)
+    v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_sd_massless'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
         q = Er[i]*10**-6. #converting Er from keV-->GeV.
         y_harm = weight*mN*q*b_harm**2/2. #this takes q in [GeV].
