@@ -170,6 +170,35 @@ def dRdQSD(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTY
         out[i]=tot
     return out
 
+def dRdQSD_neutron(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
+    """
+    This is the rate from the spin-dependent (axial-axial) scattering cross section in units of cts/keV/kg/s.
+
+    Takes same parameters as :func:`dRdQSI`.
+    
+    """
+    cdef int npts = len(Er)
+    cdef np.ndarray[DTYPE_t] out = np.empty(npts,dtype=float)
+    cdef int i
+    cdef element_name = str(elt.title())
+
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, v_independent
+    cdef DTYPE_t ff
+
+    weight = eltshort[elt]['weight']
+    b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
+    m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
+    v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_sd'] / (2 * mx * 3 * m_reduced_sq)
+    for i in range(npts):
+        q = Er[i]*10**-6. #converting Er from keV-->GeV.
+        y_harm = weight*mN*q*b_harm**2/2. #this takes q in [GeV].
+        v_min = ((2.*weight*mN*q))**0.5/(2.*weight*mN*mx/(weight*mN+mx)) *3.*10.**5
+        ff = formUV.factor_SD_neutron(element_name,y_harm)
+        val_eta = eta(v_min,v_esc,V0,v_lag)
+        tot = v_independent * val_eta * ff
+        out[i]=tot
+    return out
+
 #spin-dependent
 @cython.boundscheck(False)
 def dRdQSD_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc, DTYPE_t mx, DTYPE_t sigp, DTYPE_t fnfp, str elt, DTYPE_t rho_x=0.3):
@@ -283,12 +312,12 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff_v_sq, ff_v_std
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
+    qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_magdip'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
@@ -300,7 +329,7 @@ def dRdQmagdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc,
         ff_v_sq = formUV.factor_magdip_v_sq(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
         val_zeta = zeta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * q_squared/(scale**2) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
+        tot = v_independent * q_squared/(qref**2.) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
         out[i]=tot
     return out
 
@@ -317,12 +346,11 @@ def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, val_zeta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff_v_sq, ff_v_std
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
     qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_magdip_massless'] / (2 * mx * m_reduced_sq)
@@ -335,7 +363,7 @@ def dRdQmagdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE
         ff_v_sq = formUV.factor_magdip_v_sq(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
         val_zeta = zeta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * qref**4./(scale**2.*q_squared) * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
+        tot = v_independent * qref**2./q_squared * ( val_zeta * ff_v_sq +  val_eta * ff_v_std )
         out[i]=tot
     return out
 
@@ -352,12 +380,12 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, scale, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, qref, v_independent
     cdef DTYPE_t ff
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
+    qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_elecdip'] / (2 * mx * m_reduced_sq)
     for i in range(npts):
@@ -367,7 +395,7 @@ def dRdQelecdip(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYPE_t v_esc
         q_squared = 2.*weight*mN*q
         ff = formUV.factor_elecdip(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * q_squared/(scale**2) * val_eta * ff
+        tot = v_independent * q_squared/(qref**2.) * val_eta * ff
         out[i]=tot
     return out
 
@@ -384,12 +412,11 @@ def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYP
     cdef int i
     cdef element_name = str(elt.title())
 
-    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, scale, qref, q_squared, v_independent
+    cdef DTYPE_t q, tot, m_reduced_sq, y_harm, b_harm, v_min, val_eta, weight, qref, q_squared, v_independent
     cdef DTYPE_t ff
 
     weight = eltshort[elt]['weight']
     b_harm = 5.0677*(41.467/(45.*weight**(-1./3.) - 25.*weight**(-2./3.)))**0.5 #this is in [1/GeV]
-    scale = 1.
     qref = 0.1
     m_reduced_sq = mx**2.*mN**2./(mx+mN)**2.
     v_independent = ratenorm * rho_x * sigp * PAR_NORMS['sigma_elecdip_massless'] / (2 * mx * m_reduced_sq)
@@ -400,7 +427,7 @@ def dRdQelecdip_massless(np.ndarray[DTYPE_t] Er, DTYPE_t V0, DTYPE_t v_lag, DTYP
         q_squared = 2.*weight*mN*q
         ff = formUV.factor_elecdip(element_name,y_harm)
         val_eta = eta(v_min,v_esc,V0,v_lag)
-        tot = v_independent * qref**4./(scale**2.*q_squared) * val_eta * ff
+        tot = v_independent * qref**2./q_squared * val_eta * ff
         out[i]=tot
     return out
 
@@ -663,13 +690,13 @@ def dRdQf3_massless(np.ndarray[DTYPE_t] Er, DTYPE_t v_rms, DTYPE_t v_lag, DTYPE_
 
 @cython.boundscheck(False)
 def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
-         DTYPE_t sigma_si=0.,DTYPE_t sigma_sd=0.,
+         DTYPE_t sigma_si=0., DTYPE_t sigma_sd=0., DTYPE_t sigma_sd_neutron=0.,
          DTYPE_t sigma_anapole=0.,DTYPE_t sigma_magdip=0., DTYPE_t sigma_elecdip=0.,
          DTYPE_t sigma_LS=0., DTYPE_t sigma_f1=0., DTYPE_t sigma_f2=0., DTYPE_t sigma_f3=0.,
          DTYPE_t sigma_si_massless=0.,DTYPE_t sigma_sd_massless=0.,
-         DTYPE_t sigma_anapole_massless=0.,DTYPE_t sigma_magdip_massless=0., DTYPE_t sigma_elecdip_massless=0.,
+         DTYPE_t sigma_anapole_massless=0., DTYPE_t sigma_magdip_massless=0., DTYPE_t sigma_elecdip_massless=0.,
          DTYPE_t sigma_LS_massless=0., DTYPE_t sigma_f1_massless=0., DTYPE_t sigma_f2_massless=0., DTYPE_t sigma_f3_massless=0.,
-         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1.,
+         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1., DTYPE_t fnfp_sd_neutron=1.,
          DTYPE_t fnfp_anapole=1., DTYPE_t fnfp_magdip=1., DTYPE_t fnfp_elecdip=1.,
          DTYPE_t fnfp_LS=1., DTYPE_t fnfp_f1=1., DTYPE_t fnfp_f2=1., DTYPE_t fnfp_f3=1.,
          DTYPE_t fnfp_si_massless=0., DTYPE_t fnfp_sd_massless=1.,
@@ -729,19 +756,20 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
     Parameter suffixes:
     -------
     
-    =========  ============================= ===== =====
-    Suffix     Meaning                       norm  norm (massless)
-    =========  ============================= ===== =====
-    _si        spin-independent              1e-47 1e-48
-    _sd        spin-dependent                1e-42 1e-43
-    _anapole   anapole                       1e-40 1e-45
-    _magdip    magnetic dipole               1e-38 1e-39
-    _elecdip   electric dipole               1e-44 1e-45
-    _LS        :math:`L \cdot S` generating  1e-44 1e-42
-    _f1        pseudoscalar-scalar (DM-SM)   1e-47 1e-48
-    _f2        scalar-pseudoscalar (DM-SM)   1e-42 1e-43
-    _f3        pseudoscalar-pseudoscalar     1e-41 1e-42
-    =========  ============================= ===== =====
+    =========   ============================= ===== =====
+    Suffix      Meaning                       norm  norm (massless)
+    =========   ============================= ===== =====
+    _si         spin-independent              1e-47 1e-48
+    _sd         spin-dependent                1e-42 1e-43
+    _sd_neutron spin-dependent, neutron only  1e-42 1e-43
+    _anapole    anapole                       1e-40 1e-45
+    _magdip     magnetic dipole               1e-38 1e-39
+    _elecdip    electric dipole               1e-44 1e-45
+    _LS         :math:`L \cdot S` generating  1e-44 1e-42
+    _f1         pseudoscalar-scalar (DM-SM)   1e-47 1e-48
+    _f2         scalar-pseudoscalar (DM-SM)   1e-42 1e-43
+    _f3         pseudoscalar-pseudoscalar     1e-41 1e-42
+    =========   ============================= ===== =====
 
     In all suffixes, the mediator is specified to be "massless" by appending _massless.
 
@@ -758,6 +786,8 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
         sum += dRdQSI(Q, v_rms, v_lag, v_esc, mass, sigma_si, fnfp_si, element, rho_x=rho_x)
     if sigma_sd!= 0.:
         sum += dRdQSD(Q, v_rms, v_lag, v_esc, mass, sigma_sd, fnfp_sd, element, rho_x=rho_x)
+    if sigma_sd_neutron!= 0.:
+        sum += dRdQSD_neutron(Q, v_rms, v_lag, v_esc, mass, sigma_sd_neutron, fnfp_sd_neutron, element, rho_x=rho_x)
     if sigma_anapole!= 0.:
         sum += dRdQana(Q, v_rms, v_lag, v_esc, mass, sigma_anapole, fnfp_anapole, element, rho_x=rho_x)
     if sigma_magdip!= 0.:
@@ -796,13 +826,13 @@ def dRdQ(np.ndarray[DTYPE_t] Q, DTYPE_t mass=50.,
 
 @cython.boundscheck(False)
 def R(object efficiency_fn, DTYPE_t mass=50.,
-         DTYPE_t sigma_si=0.,DTYPE_t sigma_sd=0.,
+         DTYPE_t sigma_si=0., DTYPE_t sigma_sd=0., DTYPE_t sigma_sd_neutron=0.,
          DTYPE_t sigma_anapole=0.,DTYPE_t sigma_magdip=0., DTYPE_t sigma_elecdip=0.,
          DTYPE_t sigma_LS=0., DTYPE_t sigma_f1=0., DTYPE_t sigma_f2=0., DTYPE_t sigma_f3=0.,
          DTYPE_t sigma_si_massless=0.,DTYPE_t sigma_sd_massless=0.,
          DTYPE_t sigma_anapole_massless=0.,DTYPE_t sigma_magdip_massless=0., DTYPE_t sigma_elecdip_massless=0.,
          DTYPE_t sigma_LS_massless=0., DTYPE_t sigma_f1_massless=0., DTYPE_t sigma_f2_massless=0., DTYPE_t sigma_f3_massless=0.,
-         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1.,
+         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1., DTYPE_t fnfp_sd_neutron=1.,
          DTYPE_t fnfp_anapole=1., DTYPE_t fnfp_magdip=1., DTYPE_t fnfp_elecdip=1.,
          DTYPE_t fnfp_LS=1., DTYPE_t fnfp_f1=1., DTYPE_t fnfp_f2=1., DTYPE_t fnfp_f3=1.,
          DTYPE_t fnfp_si_massless=0., DTYPE_t fnfp_sd_massless=1.,
@@ -856,10 +886,10 @@ def R(object efficiency_fn, DTYPE_t mass=50.,
     cdef np.ndarray[DTYPE_t] dRdQs = dRdQ(Qs, mass=mass,
                                           v_lag=v_lag, v_rms=v_rms, v_esc= v_esc, rho_x=rho_x,
                                           element=element,
-                                          fnfp_si=fnfp_si, fnfp_sd=fnfp_sd, fnfp_si_massless=fnfp_si_massless, fnfp_sd_massless=fnfp_sd_massless,
+                                          fnfp_si=fnfp_si, fnfp_sd=fnfp_sd, fnfp_sd_neutron=fnfp_sd_neutron, fnfp_si_massless=fnfp_si_massless, fnfp_sd_massless=fnfp_sd_massless,
                                           fnfp_anapole=fnfp_anapole, fnfp_magdip=fnfp_magdip, fnfp_elecdip=fnfp_elecdip, fnfp_anapole_massless=fnfp_anapole_massless, fnfp_magdip_massless=fnfp_magdip_massless, fnfp_elecdip_massless=fnfp_elecdip_massless,
                                           fnfp_LS=fnfp_LS, fnfp_f1=fnfp_f1, fnfp_f2=fnfp_f2, fnfp_f3=fnfp_f3, fnfp_LS_massless=fnfp_LS_massless, fnfp_f1_massless=fnfp_f1_massless, fnfp_f2_massless=fnfp_f2_massless, fnfp_f3_massless=fnfp_f3_massless,
-                                          sigma_si= sigma_si, sigma_sd=sigma_sd, sigma_si_massless= sigma_si_massless, sigma_sd_massless=sigma_sd_massless,
+                                          sigma_si= sigma_si, sigma_sd=sigma_sd, sigma_sd_neutron=sigma_sd_neutron, sigma_si_massless= sigma_si_massless, sigma_sd_massless=sigma_sd_massless,
                                           sigma_anapole=sigma_anapole, sigma_magdip=sigma_magdip, sigma_elecdip=sigma_elecdip, sigma_anapole_massless=sigma_anapole_massless, sigma_magdip_massless=sigma_magdip_massless, sigma_elecdip_massless=sigma_elecdip_massless,
                                           sigma_LS=sigma_LS, sigma_f1=sigma_f1, sigma_f2=sigma_f2, sigma_f3=sigma_f3, sigma_LS_massless=sigma_LS_massless, sigma_f1_massless=sigma_f1_massless, sigma_f2_massless=sigma_f2_massless, sigma_f3_massless=sigma_f3_massless) * efficiency_fn(Qs)
     result = trapz(dRdQs,Qs)
@@ -869,13 +899,13 @@ def R(object efficiency_fn, DTYPE_t mass=50.,
 
 @cython.boundscheck(False)
 def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
-         DTYPE_t sigma_si=0.,DTYPE_t sigma_sd=0.,
+         DTYPE_t sigma_si=0., DTYPE_t sigma_sd=0., DTYPE_t sigma_sd_neutron=0.,
          DTYPE_t sigma_anapole=0.,DTYPE_t sigma_magdip=0., DTYPE_t sigma_elecdip=0.,
          DTYPE_t sigma_LS=0., DTYPE_t sigma_f1=0., DTYPE_t sigma_f2=0., DTYPE_t sigma_f3=0.,
          DTYPE_t sigma_si_massless=0.,DTYPE_t sigma_sd_massless=0.,
          DTYPE_t sigma_anapole_massless=0.,DTYPE_t sigma_magdip_massless=0., DTYPE_t sigma_elecdip_massless=0.,
          DTYPE_t sigma_LS_massless=0., DTYPE_t sigma_f1_massless=0., DTYPE_t sigma_f2_massless=0., DTYPE_t sigma_f3_massless=0.,
-         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1.,
+         DTYPE_t fnfp_si=1., DTYPE_t fnfp_sd=1., DTYPE_t fnfp_sd_neutron=0.,
          DTYPE_t fnfp_anapole=1., DTYPE_t fnfp_magdip=1., DTYPE_t fnfp_elecdip=1.,
          DTYPE_t fnfp_LS=1., DTYPE_t fnfp_f1=1., DTYPE_t fnfp_f2=1., DTYPE_t fnfp_f3=1.,
          DTYPE_t fnfp_si_massless=1., DTYPE_t fnfp_sd_massless=1.,
@@ -901,10 +931,10 @@ def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
    
     cdef DTYPE_t Rate = R(efficiency_fn, mass=mass,
                                          v_rms=v_rms, v_lag=v_lag, v_esc=v_esc, rho_x=rho_x,
-                                          fnfp_si=fnfp_si, fnfp_sd=fnfp_sd,
+                                          fnfp_si=fnfp_si, fnfp_sd=fnfp_sd, fnfp_sd_neutron=fnfp_sd_neutron,
                                           fnfp_anapole=fnfp_anapole, fnfp_magdip=fnfp_magdip, fnfp_elecdip=fnfp_elecdip,
                                           fnfp_LS=fnfp_LS, fnfp_f1=fnfp_f1, fnfp_f2=fnfp_f2, fnfp_f3=fnfp_f3,
-                                          sigma_si= sigma_si, sigma_sd=sigma_sd,
+                                          sigma_si= sigma_si, sigma_sd=sigma_sd, sigma_sd_neutron=sigma_sd_neutron,
                                           sigma_anapole=sigma_anapole, sigma_magdip=sigma_magdip, sigma_elecdip=sigma_elecdip,
                                           sigma_LS=sigma_LS, sigma_f1=sigma_f1, sigma_f2=sigma_f2, sigma_f3=sigma_f3,
                                           fnfp_si_massless=fnfp_si_massless, fnfp_sd_massless=fnfp_sd_massless,
@@ -922,10 +952,10 @@ def loglikelihood(np.ndarray[DTYPE_t] Q, object efficiency_fn, DTYPE_t mass=50.,
         tot -= Nevents * log(Rate) 
         out = dRdQ(Q, mass=mass,
                                         v_lag=v_lag, v_rms=v_rms, v_esc= v_esc, rho_x=rho_x, element=element,
-                                        fnfp_si=fnfp_si, fnfp_sd=fnfp_sd,
+                                        fnfp_si=fnfp_si, fnfp_sd=fnfp_sd, fnfp_sd_neutron=fnfp_sd_neutron,
                                           fnfp_anapole=fnfp_anapole, fnfp_magdip=fnfp_magdip, fnfp_elecdip=fnfp_elecdip,
                                           fnfp_LS=fnfp_LS, fnfp_f1=fnfp_f1, fnfp_f2=fnfp_f2, fnfp_f3=fnfp_f3,
-                                          sigma_si= sigma_si, sigma_sd=sigma_sd,
+                                          sigma_si= sigma_si, sigma_sd=sigma_sd, sigma_sd_neutron=sigma_sd_neutron,
                                           sigma_anapole=sigma_anapole, sigma_magdip=sigma_magdip, sigma_elecdip=sigma_elecdip,
                                           sigma_LS=sigma_LS, sigma_f1=sigma_f1, sigma_f2=sigma_f2, sigma_f3=sigma_f3,
                                           fnfp_si_massless=fnfp_si_massless, fnfp_sd_massless=fnfp_sd_massless,

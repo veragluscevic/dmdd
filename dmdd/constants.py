@@ -14,8 +14,12 @@ NUCLEAR_MASSES = {
     'sodium': 21.4140502327,
     'iodine': 118.206437626,
     'fluorine': 17.6969003039,
+    'he3': 3.,
+    'helium': 4.,
+    'nitrogen': 14.,
+    'neon': 20.,
     } # this is target nucleus mass in GeV: mT[GeV] = 0.9314941 * A[AMU]
 
-ELEMENT_INFO = {"xenon":{128:0.0192,129:0.2644,130:0.0408,131:0.2118,132:0.2689,134:0.1044,136:0.0887,'weight':131.1626},"germanium":{70:0.2084,72:0.2754,73:0.0773,74:0.3628,76:0.0761,'weight':72.6905},"iodine":{127:1.,'weight':127.},"sodium":{23:1.,'weight':23.},"silicon":{28:0.922,29:0.047,30:0.031,'weight':28.109},"fluorine":{19:1.,'weight':19.},"argon":{40:1.,'weight':40.},"helium":{4:1.,'weight':4.}} 
+ELEMENT_INFO = {"xenon":{128:0.0192,129:0.2644,130:0.0408,131:0.2118,132:0.2689,134:0.1044,136:0.0887,'weight':131.1626},"germanium":{70:0.2084,72:0.2754,73:0.0773,74:0.3628,76:0.0761,'weight':72.6905},"iodine":{127:1.,'weight':127.},"sodium":{23:1.,'weight':23.},"silicon":{28:0.922,29:0.047,30:0.031,'weight':28.109},"fluorine":{19:1.,'weight':19.},"argon":{40:1.,'weight':40.},"helium":{4:1.,'weight':4.},"he3":{3:1.,'weight':3.},"nitrogen":{14:1.,'weight':14.},"neon":{20:1.,'weight':20.}} 
     
 
